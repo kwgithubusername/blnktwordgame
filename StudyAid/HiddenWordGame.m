@@ -1,0 +1,348 @@
+//
+//  HiddenWordGame.m
+//  StudyAid
+//
+//  Created by Woudini on 12/28/14.
+//  Copyright (c) 2014 Hi Range. All rights reserved.
+//
+
+#import "HiddenWordGame.h"
+#import "HWGWordAndRangeStorage.h"
+#import "HWGWordAndRangeStorageToHighlight.h"
+#import "HWGWordSearcher.h"
+// #import <CoreText/CoreText.h>
+
+@interface HiddenWordGame ()
+
+@property (nonatomic) HWGWordAndRangeStorage *wordAndRangeStorage;
+@property (nonatomic) HWGWordAndRangeStorageToHighlight *wordAndRangeStorageToHighlight;
+@property (nonatomic) HWGWordSearcher *wordSearcher;
+@property (nonatomic) NSString *selectedWordToHighlight;
+@property (nonatomic) NSRange selectedWordRange;
+@property (nonatomic) NSMutableArray *rangesMutableArray;
+@property (nonatomic) NSMutableDictionary *rangesMutableDictionary;
+@property (nonatomic) NSMutableArray *storedWordMutableArray;
+@property (nonatomic) NSMutableArray *tempWordMutableArray;
+@property (nonatomic) UIColor *highlighterColor;
+@property (nonatomic) BOOL willHighlightInSequence;
+@end
+
+@implementation HiddenWordGame
+
+#pragma mark Initializer
+
+-(void)setup
+{
+    self.filteredWordArray = [[NSMutableArray alloc] init];
+    self.storedWordMutableArray = [[NSMutableArray alloc] init];
+    self.tempWordMutableArray = [[NSMutableArray alloc] init];
+}
+
+-(instancetype)init;
+{
+    self = [super init];
+    if (self)
+    {
+        [self setup];
+        [self resetGame];
+    }
+    return self;
+}
+
+
+#pragma mark Create classes
+
+-(HWGInvalidCharacterRemover *)invalidCharacterRemover
+{
+    if (!_invalidCharacterRemover) _invalidCharacterRemover = [[HWGInvalidCharacterRemover alloc] init];
+    return _invalidCharacterRemover;
+}
+
+-(HWGCommonWordFilter *)commonWordFilter
+{
+    if (!_commonWordFilter) _commonWordFilter = [[HWGCommonWordFilter alloc] init];
+    return _commonWordFilter;
+}
+
+-(HWGWordHighlighter *)wordHighlighter
+{
+    if (!_wordHighlighter) _wordHighlighter = [[HWGWordHighlighter alloc] init];
+    return _wordHighlighter;
+}
+
+-(HWGWordAndRangeStorage *)wordAndRangeStorage
+{
+    if (!_wordAndRangeStorage) _wordAndRangeStorage = [[HWGWordAndRangeStorage alloc] init];
+    return _wordAndRangeStorage;
+}
+
+-(HWGWordAndRangeStorageToHighlight *)wordAndRangeStorageToHighlight
+{
+    if (!_wordAndRangeStorageToHighlight) _wordAndRangeStorageToHighlight = [[HWGWordAndRangeStorageToHighlight alloc] init];
+    return _wordAndRangeStorageToHighlight;
+}
+
+-(HWGWordSearcher *)wordSearcher
+{
+    if (!_wordSearcher) _wordSearcher = [[HWGWordSearcher alloc] init];
+    return _wordSearcher;
+}
+
+#pragma mark Game logic
+
+-(void)startWordGame:(UITextView *)textView withHighlighterColor:(UIColor *)color InSequence:(BOOL)willHighlightInSequence
+{
+    // If the colorStorage was able to load a color (and it should, since it was registered as a default in the view controller
+    if (color)
+    {
+        // Use the color that was loaded
+        self.highlighterColor = color;
+    }
+    else
+    {
+        // Safely let the game continue with the default color but log an error
+        NSLog(@"Error: User defaults for color were not initally registered- selecting yellow");
+        self.highlighterColor = [UIColor yellowColor];
+    }
+    
+    // Reset formatting
+    self.hintIndex = 0;
+    [self.wordHighlighter removeHighlightsFromTextView:textView];
+    
+    // Clear all word and range storage
+    
+    self.wordAndRangeStorage = nil;
+    self.wordAndRangeStorageToHighlight = nil;
+    self.wordHighlighter = nil;
+    self.wordSearcher = nil;
+    
+    // NSLog(@"dictionaries are %@ and %@ and %@", self.wordAndRangeStorage.indexMutableDictionary, self.wordAndRangeStorageToHighlight.indexMutableDictionary, self.wordIndexStorage.indexMutableArray);
+    
+    // Remove invalid characters (e.g. ;,:)
+    NSMutableArray *wordArray = self.filteredWordArray;
+    
+    //NSLog(@"Filtered word array is %@", self.filteredWordArray);
+    // Count the number of words - not safe for 64 bit even with less than 2^31-1 elements
+    int numberOfWords = (int)[wordArray count];
+    
+    // Figure out how many words to hide
+    //NSLog(@"Percent to hide: %f", self.percentToHide);
+    int numberOfWordsToHide = self.percentToHide * numberOfWords;
+    if (numberOfWordsToHide == 0)
+    {
+        numberOfWordsToHide = 1;
+    }
+    //NSLog(@"Hiding %d of %d words", numberOfWordsToHide, numberOfWords);
+    
+    // Use an NSSet to get unique words only so that the HWGWordSearcher is only searching for the ranges of each word once
+    [wordArray setArray:[[NSSet setWithArray:wordArray] allObjects]];
+    //NSLog(@"Unique words array is %@", wordArray);
+    
+    // Reset the words from longest to shortest so that the HWGWordAndRangeStorage can properly block any embedded words
+    NSArray *array = [wordArray sortedArrayUsingComparator:^NSComparisonResult(NSString *value1, NSString *value2) {
+        NSComparisonResult result = NSOrderedSame;
+        if (value1.length > value2.length) {
+            result = NSOrderedAscending;
+        } else if (value1.length < value2.length) {
+            result = NSOrderedDescending;
+        }
+        return result;
+    }];
+    
+    //NSLog(@"ordered array is %@", array);
+    
+    // Get the ranges for every word
+    for (NSString *word in array)
+    {
+        // Find all unique occurrences of the word
+        NSArray *rangesArray = [self.wordSearcher searchForRangesOfString:word inString:textView.text];
+        
+        // Store each occurrence with an instance of the word
+        [self.wordAndRangeStorage storeRanges:rangesArray forWord:word];
+    }
+    
+    //NSLog(@"HWG: wordandrangestorage is %@ with %d words to hide", self.wordAndRangeStorage.indexMutableArray, numberOfWordsToHide);
+    
+    // Hide only a certain number of words
+    for (int i = 0; i < numberOfWordsToHide; i++)
+    {
+        // Draw a random word and range
+        
+        // Store the range and word
+        self.tempWordMutableArray = [self.wordAndRangeStorage getRandomRangeAndWord];
+        
+        NSRange range;
+        NSValue *unwrapper = [self.tempWordMutableArray objectAtIndex:0];
+        [unwrapper getValue:&range];
+        
+        // Hide the word
+        [self.wordHighlighter hideWordsInTextView:textView inWordRange:range];
+        //NSLog(@"Hiding %@ with range %@ at range %@", [self.tempWord objectAtIndex:1], [self.tempWord objectAtIndex:0], NSStringFromRange(range));
+        
+        // Store each word and range that is hidden for the highlighter method to choose from
+        [self.wordAndRangeStorageToHighlight storeRangeForWord:self.tempWordMutableArray];
+        
+        // Ensure that the next word that is hidden is unique
+         [self.wordAndRangeStorage removeRangeForWord];
+    }
+    [self highlightRandomWord:textView InSequence:willHighlightInSequence];
+}
+
+-(void)highlightRandomWord:(UITextView *)textView InSequence:(BOOL)willHighlightInSequence;
+{
+    
+    // Randomly select a word and its range
+    if (willHighlightInSequence)
+    {
+        self.storedWordMutableArray = [self.wordAndRangeStorageToHighlight getRangeAndWordInSequence];
+    }
+    else
+    {
+        self.storedWordMutableArray = [self.wordAndRangeStorageToHighlight getRandomRangeAndWord];
+    }
+
+
+    NSRange range;
+    NSValue *unwrapper = [self.storedWordMutableArray objectAtIndex:0];
+    [unwrapper getValue:&range];
+    
+    //NSLog(@"Word selected to highlight:%@", self.storedWordMutableArray);
+    
+    // Highlight the word at that range
+    [self.wordHighlighter highlightTextView:textView withColor:self.highlighterColor inRange:range];
+
+    // Store the range
+    self.selectedWordRange = range;
+    //NSLog(@"HRange is %@", NSStringFromRange(self.selectedWordRange));
+    // Scroll to the next word
+    [textView scrollRangeToVisible:self.selectedWordRange];
+    
+    // Remove the range and index range for that word
+    [self.wordAndRangeStorageToHighlight removeRangeForWord:self.storedWordMutableArray];
+    
+    self.willHighlightInSequence = willHighlightInSequence;
+}
+
+-(BOOL)checkString:(NSString *)text withTextView:(UITextView *)words
+{
+    if ([self.wordAndRangeStorageToHighlight.selectedWord caseInsensitiveCompare:text] == NSOrderedSame)
+    {
+        self.hintIndex = 0;
+        
+        // Reveal the word
+        [words.textStorage addAttribute:NSForegroundColorAttributeName value:[UIColor blackColor] range:self.selectedWordRange];
+        
+        //NSLog(@"HRange is %@", NSStringFromRange(self.selectedWordRange));
+        // If the user has iterated through all words in selectedWords, end the game; if not, continue to the next word
+        if (self.wordAndRangeStorageToHighlight.indexMutableArray == nil || [self.wordAndRangeStorageToHighlight.indexMutableArray count] == 0)
+        {
+            //NSLog(@"Array is empty- game over");
+            self.gameOver = YES;
+        }
+        else
+        {
+        [self highlightRandomWord:words InSequence:self.willHighlightInSequence];
+        }
+        // User has submitted the correct string
+        return YES;
+    }
+    else
+    {
+        // User has submitted the incorrect string
+        return NO;
+    }
+}
+
+#pragma mark Hint methods
+
+-(NSString *)giveHint
+{
+    NSMutableString *hint = [[NSMutableString alloc] init];
+    for (int i = 0; i <= self.hintIndex; i++)
+    {
+        [hint appendString:[NSString stringWithFormat:@"%c", [[self.storedWordMutableArray objectAtIndex:1] characterAtIndex:i]]];
+    }
+    self.hintIndex++;
+    return hint;
+}
+
+-(void)setHintIndex:(int)hintIndex
+{
+    if ([self.storedWordMutableArray count] > 0)
+    {
+        if (hintIndex < [[self.storedWordMutableArray objectAtIndex:1] length] && hintIndex >= 0)
+        {
+            _hintIndex = hintIndex;
+        }
+    }
+    else
+    {
+        _hintIndex = hintIndex;
+    }
+}
+
+-(void)setPercentToHide:(float)percentToHide
+{
+    _percentToHide = percentToHide * 0.01;
+}
+
+#pragma mark Unused methods
+
+-(void)resetGame
+{
+    self.hintIndex = 0;
+}
+
+
+-(void)nextWord:(UITextView *)words
+{
+
+}
+
+
+-(void)randomUniqueNumberGenerator:(NSMutableArray *)targetArray
+{
+    // The target array for the ranges is the array of ranges at which each instance of the word occurs
+    
+    // If this is created outside the for loop, it can't know which word to look up the range for
+    // If this is created inside the for loop, it will be created every time a word is found
+    // Does each word need a new indexArray? Yes because
+    // How about creating it outside the for loop and setting it inside the for loop; if the indexArray is ,
+    
+    // If this is alloc inited outside the for loop, there will only be one array of NSRanges but it will be reset for every new word.
+    // If this is alloc inited inside the for loop, there will be multiple arrays of NSRanges, one for each word
+    
+    // for (...) {...
+    // if (indexArray = nil) {alloc init and set the indexarray}; then take out the index, use it, and remove it
+    // Once the array runs out of indexes, it will get set again
+    
+    // Create an array that goes from 0 to [NSMutableArray count]; this array will be used to store indexes
+    NSMutableArray* indexArray = [[NSMutableArray alloc] init];
+    for (int i = 0; i < [targetArray count]; i++)
+    {
+        [indexArray addObject:[NSNumber numberWithInt:i]];
+    }
+    
+    // Get a random int within the bounds of the indexArray
+    int randomIndexForArray = arc4random_uniform((int)[indexArray count]);
+    
+    // Pull an index from the indexArray at the index random int
+    int randomIndex = [indexArray[randomIndexForArray] intValue];
+    
+    // Use the index to randomly select an object from your target array
+    __unused id someObject = targetArray[randomIndex];
+    
+    NSRange range;
+    NSValue *rangeOfRandomlySelectedWordValue = targetArray[randomIndex];
+    [rangeOfRandomlySelectedWordValue getValue:&range];
+    
+    // Once we have put away the word, remove the index from the indexArray
+    [indexArray removeObjectAtIndex:[indexArray count]-1];
+    
+    // Since the indexArray has lost an object, its index has decremented by 1. The word in the randomlySelectedWordArray must also be removed to match the decrement
+    [targetArray removeObjectAtIndex:randomIndex];
+}
+
+
+@end
+
