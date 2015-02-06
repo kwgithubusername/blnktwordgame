@@ -325,19 +325,12 @@
     _percentToHide = percentToHide * 0.01;
 }
 
-#pragma mark Unused methods
-
 -(void)resetGame
 {
     self.hintIndex = 0;
 }
 
-
--(void)nextWord:(UITextView *)words
-{
-
-}
-
+#pragma mark Unused methods
 
 -(void)randomUniqueNumberGenerator:(NSMutableArray *)targetArray
 {
