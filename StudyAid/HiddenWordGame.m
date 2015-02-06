@@ -88,11 +88,23 @@
     return _wordSearcher;
 }
 
-#pragma mark Game logic
+#pragma mark Preparing/Resetting the game
 
--(void)startWordGame:(UITextView *)textView withHighlighterColor:(UIColor *)color InSequence:(BOOL)willHighlightInSequence
+-(void)resetFormattingInTextView:(UITextView *)textView
 {
-    // If the colorStorage was able to load a color (and it should, since it was registered as a default in the view controller
+    [self.wordHighlighter removeHighlightsFromTextView:textView];
+}
+
+-(void)clearAllWordAndRangeStorage
+{
+    self.wordAndRangeStorage = nil;
+    self.wordAndRangeStorageToHighlight = nil;
+    self.wordHighlighter = nil;
+    self.wordSearcher = nil;
+}
+
+-(void)loadColor:(UIColor *)color
+{
     if (color)
     {
         // Use the color that was loaded
@@ -104,35 +116,11 @@
         NSLog(@"Error: User defaults for color were not initally registered- selecting yellow");
         self.highlighterColor = [UIColor yellowColor];
     }
-    
-    // Reset formatting
-    self.hintIndex = 0;
-    [self.wordHighlighter removeHighlightsFromTextView:textView];
-    
-    // Clear all word and range storage
-    
-    self.wordAndRangeStorage = nil;
-    self.wordAndRangeStorageToHighlight = nil;
-    self.wordHighlighter = nil;
-    self.wordSearcher = nil;
-    
-    // NSLog(@"dictionaries are %@ and %@ and %@", self.wordAndRangeStorage.indexMutableDictionary, self.wordAndRangeStorageToHighlight.indexMutableDictionary, self.wordIndexStorage.indexMutableArray);
-    
-    // Remove invalid characters (e.g. ;,:)
-    NSMutableArray *wordArray = self.filteredWordArray;
-    
+}
+
+-(NSArray *)loadWordsToHideFromMutableArray:(NSMutableArray *)wordArray
+{
     //NSLog(@"Filtered word array is %@", self.filteredWordArray);
-    // Count the number of words - not safe for 64 bit even with less than 2^31-1 elements
-    int numberOfWords = (int)[wordArray count];
-    
-    // Figure out how many words to hide
-    //NSLog(@"Percent to hide: %f", self.percentToHide);
-    int numberOfWordsToHide = self.percentToHide * numberOfWords;
-    if (numberOfWordsToHide == 0)
-    {
-        numberOfWordsToHide = 1;
-    }
-    //NSLog(@"Hiding %d of %d words", numberOfWordsToHide, numberOfWords);
     
     // Use an NSSet to get unique words only so that the HWGWordSearcher is only searching for the ranges of each word once
     [wordArray setArray:[[NSSet setWithArray:wordArray] allObjects]];
@@ -148,11 +136,28 @@
         }
         return result;
     }];
+    return array;
+}
+
+-(int)loadNumberOfWordsToHideFromMutableArray:(NSMutableArray *)wordArray
+{
+    // Count the number of words - not safe for 64 bit even with less than 2^31-1 elements
+    int numberOfWords = (int)[wordArray count];
     
-    //NSLog(@"ordered array is %@", array);
-    
-    // Get the ranges for every word
-    for (NSString *word in array)
+    // Figure out how many words to hide
+    //NSLog(@"Percent to hide: %f", self.percentToHide);
+    int numberOfWordsToHide = self.percentToHide * numberOfWords;
+    if (numberOfWordsToHide == 0)
+    {
+        numberOfWordsToHide = 1;
+    }
+    return numberOfWordsToHide;
+    //NSLog(@"Hiding %d of %d words", numberOfWordsToHide, numberOfWords);
+}
+
+-(void)loadRangesFromArrayOfWords:(NSArray *)wordsToHide inTextView:(UITextView *)textView
+{
+    for (NSString *word in wordsToHide)
     {
         // Find all unique occurrences of the word
         NSArray *rangesArray = [self.wordSearcher searchForRangesOfString:word inString:textView.text];
@@ -160,10 +165,12 @@
         // Store each occurrence with an instance of the word
         [self.wordAndRangeStorage storeRanges:rangesArray forWord:word];
     }
-    
-    //NSLog(@"HWG: wordandrangestorage is %@ with %d words to hide", self.wordAndRangeStorage.indexMutableArray, numberOfWordsToHide);
-    
-    // Hide only a certain number of words
+}
+
+#pragma mark Hide Words methods
+
+-(void)hideNumberOfWords:(int)numberOfWordsToHide inTextView:(UITextView *)textView
+{
     for (int i = 0; i < numberOfWordsToHide; i++)
     {
         // Draw a random word and range
@@ -183,10 +190,42 @@
         [self.wordAndRangeStorageToHighlight storeRangeForWord:self.tempWordMutableArray];
         
         // Ensure that the next word that is hidden is unique
-         [self.wordAndRangeStorage removeRangeForWord];
+        [self.wordAndRangeStorage removeRangeForWord];
     }
+}
+
+-(void)startWordGame:(UITextView *)textView withHighlighterColor:(UIColor *)color InSequence:(BOOL)willHighlightInSequence
+{
+    // If the colorStorage was able to load a color (and it should, since it was registered as a default in the view controller
+    [self loadColor:color];
+    
+    // New game needs a hint index of 0
+    self.hintIndex = 0;
+
+    // Reset formatting
+    [self resetFormattingInTextView:textView];
+    
+    // Clear all word and range storage
+    [self clearAllWordAndRangeStorage];
+    
+    // Remove invalid characters (e.g. ;,:)
+    NSMutableArray *wordArray = self.filteredWordArray;
+    
+    NSArray *wordsToHide = [[NSArray alloc] initWithArray:[self loadWordsToHideFromMutableArray:self.filteredWordArray]];
+    
+    // Get the ranges for every word
+    [self loadRangesFromArrayOfWords:wordsToHide inTextView:textView];
+
+    //NSLog(@"HWG: wordandrangestorage is %@ with %d words to hide", self.wordAndRangeStorage.indexMutableArray, numberOfWordsToHide);
+    int numberOfWordsToHide = [self loadNumberOfWordsToHideFromMutableArray:wordArray];
+    
+    // Hide only a certain number of words
+    [self hideNumberOfWords:numberOfWordsToHide inTextView:textView];
+    
     [self highlightRandomWord:textView InSequence:willHighlightInSequence];
 }
+
+#pragma mark Highlight methods
 
 -(void)highlightRandomWord:(UITextView *)textView InSequence:(BOOL)willHighlightInSequence;
 {
