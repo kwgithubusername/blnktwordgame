@@ -123,7 +123,7 @@
                                                     <constraint firstAttribute="width" constant="150" id="ZJI-GT-Zf3"/>
                                                 </constraints>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                <textInputTraits key="textInputTraits"/>
+                                                <textInputTraits key="textInputTraits" autocorrectionType="no"/>
                                                 <connections>
                                                     <outlet property="delegate" destination="BYZ-38-t0r" id="2LH-JR-7AX"/>
                                                 </connections>
@@ -341,7 +341,7 @@
                                                     <constraint firstAttribute="height" constant="30" id="ONv-Tu-IOT"/>
                                                 </constraints>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                <textInputTraits key="textInputTraits"/>
+                                                <textInputTraits key="textInputTraits" autocorrectionType="no"/>
                                                 <connections>
                                                     <outlet property="delegate" destination="f6h-dc-DRB" id="SJ7-d1-sXh"/>
                                                 </connections>
@@ -352,7 +352,7 @@
                                                     <constraint firstAttribute="height" constant="30" id="Tpx-wg-oFc"/>
                                                 </constraints>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                <textInputTraits key="textInputTraits"/>
+                                                <textInputTraits key="textInputTraits" autocorrectionType="no"/>
                                                 <connections>
                                                     <outlet property="delegate" destination="f6h-dc-DRB" id="W7O-o1-Y2E"/>
                                                 </connections>
@@ -546,11 +546,11 @@
                                                 <exclude reference="E0u-ZH-WtF"/>
                                                 <exclude reference="FAy-f0-gRF"/>
                                                 <exclude reference="yMJ-Tj-rpG"/>
-                                                <exclude reference="tRR-3d-AaW"/>
                                                 <exclude reference="Cyk-ao-Zgh"/>
-                                                <exclude reference="yWv-tG-8UB"/>
                                                 <exclude reference="dKF-vj-6xb"/>
                                                 <exclude reference="pR3-3V-aaw"/>
+                                                <exclude reference="yWv-tG-8UB"/>
+                                                <exclude reference="tRR-3d-AaW"/>
                                             </mask>
                                         </variation>
                                     </view>
