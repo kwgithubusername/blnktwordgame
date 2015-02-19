@@ -151,8 +151,9 @@
     {
         numberOfWordsToHide = 1;
     }
-    return numberOfWordsToHide;
     //NSLog(@"Hiding %d of %d words", numberOfWordsToHide, numberOfWords);
+    return numberOfWordsToHide;
+    
 }
 
 -(void)loadRangesFromArrayOfWords:(NSArray *)wordsToHide inTextView:(UITextView *)textView
@@ -211,13 +212,13 @@
     // Remove invalid characters (e.g. ;,:)
     NSMutableArray *wordArray = self.filteredWordArray;
     
+    int numberOfWordsToHide = [self loadNumberOfWordsToHideFromMutableArray:wordArray];
+    //NSLog(@"word array is %d", [wordArray count]);
+    
     NSArray *wordsToHide = [[NSArray alloc] initWithArray:[self loadWordsToHideFromMutableArray:self.filteredWordArray]];
     
     // Get the ranges for every word
     [self loadRangesFromArrayOfWords:wordsToHide inTextView:textView];
-
-    //NSLog(@"HWG: wordandrangestorage is %@ with %d words to hide", self.wordAndRangeStorage.indexMutableArray, numberOfWordsToHide);
-    int numberOfWordsToHide = [self loadNumberOfWordsToHideFromMutableArray:wordArray];
     
     // Hide only a certain number of words
     [self hideNumberOfWords:numberOfWordsToHide inTextView:textView];

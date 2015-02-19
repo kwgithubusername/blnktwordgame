@@ -24,7 +24,6 @@
 -(instancetype)init;
 -(void)startWordGame:(UITextView *)words withHighlighterColor:(UIColor *)color InSequence:(BOOL)willHighlightInSequence;
 -(NSString *)giveHint;
--(void)nextWord:(UITextView *)words;
 -(BOOL)checkString:(NSString *)text withTextView:(UITextView *)words;
 
 @end
