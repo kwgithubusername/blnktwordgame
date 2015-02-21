@@ -351,7 +351,7 @@
     
     // Create an array that goes from 0 to [NSMutableArray count]; this array will be used to store indexes
     NSMutableArray* indexArray = [[NSMutableArray alloc] init];
-    for (int i = 0; i < [targetArray count]; i++)
+    for (int i = 0, count = (int)[targetArray count]; i < count; i++)
     {
         [indexArray addObject:[NSNumber numberWithInt:i]];
     }

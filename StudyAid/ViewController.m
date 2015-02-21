@@ -98,7 +98,10 @@
 
 - (void)textViewDidChange:(UITextView *)textView
 {
-    if ([self.textView.text isEqual: @""])
+    NSString *checkIfEmptyString = [textView.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+    BOOL isOnlySpaces = [checkIfEmptyString isEqualToString:@""];
+    
+    if (isOnlySpaces)
     {
         (self.startButton.enabled = NO);
     }
