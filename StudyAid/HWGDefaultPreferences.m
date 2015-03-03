@@ -67,9 +67,117 @@
     return @[@"and",@"or",@"if",@"but",@"as",@"by",@"then",@"so",@"because",@"since",@"also",@"first",@"next",@"finally",@"furthermore"];
 }
 
+- (NSArray *)verbBe
+{
+    return @[@"is",@"was",@"been",@"being",@"be",@"were",@"are"];
+}
+
+- (NSArray *)verbHave
+{
+    return @[@"has",@"have",@"had",@"having"]; //having is new
+}
+
+- (NSArray *)verbLike
+{
+    return @[@"like",@"likes",@"liked",@"liking",@"likings"];
+}
+
+- (NSArray *)verbDo
+{
+    return @[@"do",@"does",@"doing",@"done",@"did"];
+}
+
+- (NSArray *)verbGet
+{
+    return @[@"get",@"gets",@"getting",@"got",@"gotten"];
+}
+
+- (NSArray *)verbGo
+{
+    return @[@"go",@"went",@"going",@"gone"];
+}
+
+- (NSArray *)verbMake
+{
+    return @[@"make",@"makes",@"making",@"made"];
+}
+
+- (NSArray *)verbKnow
+{
+    return @[@"know",@"knows",@"knew",@"known",@"knowing"];
+}
+
+- (NSArray *)verbTake
+{
+    return @[@"take",@"takes",@"taking",@"taken",@"took"]; //took is new
+}
+
+- (NSArray *)verbSee
+{
+    return @[@"see",@"sees",@"saw",@"seen",@"seeing"];
+}
+
+- (NSArray *)verbLook
+{
+    return @[@"look",@"looks",@"looking",@"looked"];
+}
+
+- (NSArray *)verbCome
+{
+    return @[@"come",@"comes",@"came",@"coming"];
+}
+
+- (NSArray *)verbThink
+{
+    return @[@"think",@"thinks",@"thought",@"thinking"];
+}
+
+- (NSArray *)verbUse
+{
+    return @[@"use",@"used",@"using",@"uses"];
+}
+
+- (NSArray *)verbWork
+{
+    return @[@"work",@"working",@"workings",@"worked",@"works"];
+}
+
+- (NSArray *)verbWant
+{
+    return @[@"wants",@"want",@"wanting",@"wanted"];
+}
+
+- (NSArray *)verbGive
+{
+    return @[@"give",@"giving",@"gave",@"given",@"gives"];
+}
+
 - (NSArray *)miscellaneous
 {
-    return @[@"is",@"was",@"been",@"being",@"be",@"were",@"are",@"has",@"have",@"had",@"will",@"like",@"likes",@"liked",@"liking",@"likings",@"can",@"such",@"not",@"do",@"does",@"doing",@"done",@"did",@"all",@"no",@"none",@"would",@"get",@"gets",@"getting",@"got",@"gotten",@"go",@"went",@"going",@"gone",@"make",@"makes",@"making",@"made",@"just",@"know",@"knows",@"knew",@"known",@"knowing",@"take",@"takes",@"taking",@"taken",@"people",@"good",@"better",@"best",@"some",@"could",@"many",@"most",@"any",@"few",@"several",@"see",@"sees",@"saw",@"seen",@"seeing",@"other",@"others",@"than",@"now",@"today",@"today's",@"look",@"looks",@"looking",@"looked",@"only",@"come",@"comes",@"came",@"coming",@"it's",@"think",@"thinks",@"thought",@"thinking",@"use",@"used",@"using",@"uses",@"work",@"working",@"workings",@"worked",@"works",@"even",@"well",@"way",@"ways",@"new",@"wants",@"want",@"wanting",@"wanted",@"give",@"giving",@"gave",@"given",@"gives"];
+    return @[@"is",@"was",@"been",@"being",@"be",@"were",@"are",
+             @"has",@"have",@"had",@"will",
+             @"like",@"likes",@"liked",@"liking",@"likings",
+             @"can",@"such",@"not",
+             @"do",@"does",@"doing",@"done",@"did"
+             ,@"all",@"no",@"none",@"would",
+             @"get",@"gets",@"getting",@"got",@"gotten",
+             @"go",@"went",@"going",@"gone",
+             @"make",@"makes",@"making",@"made",
+             @"just",
+             @"know",@"knows",@"knew",@"known",@"knowing",
+             @"take",@"takes",@"taking",@"taken",
+             @"people",@"good",@"better",@"best",@"some",@"could",@"many",@"most",@"any",@"few",@"several",
+             @"see",@"sees",@"saw",@"seen",@"seeing",
+             @"other",@"others",@"than",@"now",@"today",@"today's",
+             @"look",@"looks",@"looking",@"looked",@"only",
+             @"come",@"comes",@"came",@"coming",
+             @"it's",
+             @"think",@"thinks",@"thought",@"thinking",
+             @"use",@"used",@"using",@"uses",
+             @"work",@"working",@"workings",@"worked",@"works",
+             @"even",@"well",@"way",@"ways",@"new",
+             @"wants",@"want",@"wanting",@"wanted"
+             ,@"give",@"giving",@"gave",@"given",@"gives"];
 }
 
 - (NSArray *)questions
