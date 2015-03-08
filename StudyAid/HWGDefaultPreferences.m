@@ -67,6 +67,8 @@
     return @[@"and",@"or",@"if",@"but",@"as",@"by",@"then",@"so",@"because",@"since",@"also",@"first",@"next",@"finally",@"furthermore"];
 }
 
+#pragma mark Verb conjugation
+
 - (NSArray *)verbBe
 {
     return @[@"is",@"was",@"been",@"being",@"be",@"were",@"are"];
@@ -94,7 +96,7 @@
 
 - (NSArray *)verbGo
 {
-    return @[@"go",@"went",@"going",@"gone"];
+    return @[@"go",@"went",@"going",@"gone",@"goes"]; //goes is new
 }
 
 - (NSArray *)verbMake
@@ -152,32 +154,39 @@
     return @[@"give",@"giving",@"gave",@"given",@"gives"];
 }
 
+- (NSArray *)allVerbs
+{
+    NSMutableArray *allVerbsMutableArray = [[NSMutableArray alloc] init];
+    [allVerbsMutableArray addObjectsFromArray:[self verbBe]];
+    [allVerbsMutableArray addObjectsFromArray:[self verbCome]];
+    [allVerbsMutableArray addObjectsFromArray:[self verbDo]];
+    [allVerbsMutableArray addObjectsFromArray:[self verbGet]];
+    [allVerbsMutableArray addObjectsFromArray:[self verbGive]];
+    [allVerbsMutableArray addObjectsFromArray:[self verbGo]];
+    [allVerbsMutableArray addObjectsFromArray:[self verbHave]];
+    [allVerbsMutableArray addObjectsFromArray:[self verbKnow]];
+    [allVerbsMutableArray addObjectsFromArray:[self verbLike]];
+    [allVerbsMutableArray addObjectsFromArray:[self verbLook]];
+    [allVerbsMutableArray addObjectsFromArray:[self verbMake]];
+    [allVerbsMutableArray addObjectsFromArray:[self verbSee]];
+    [allVerbsMutableArray addObjectsFromArray:[self verbTake]];
+    [allVerbsMutableArray addObjectsFromArray:[self verbThink]];
+    [allVerbsMutableArray addObjectsFromArray:[self verbUse]];
+    [allVerbsMutableArray addObjectsFromArray:[self verbWant]];
+    [allVerbsMutableArray addObjectsFromArray:[self verbWork]];
+    return allVerbsMutableArray;
+}
+
 - (NSArray *)miscellaneous
 {
-    return @[@"is",@"was",@"been",@"being",@"be",@"were",@"are",
-             @"has",@"have",@"had",@"will",
-             @"like",@"likes",@"liked",@"liking",@"likings",
+    return @[@"will",
              @"can",@"such",@"not",
-             @"do",@"does",@"doing",@"done",@"did"
-             ,@"all",@"no",@"none",@"would",
-             @"get",@"gets",@"getting",@"got",@"gotten",
-             @"go",@"went",@"going",@"gone",
-             @"make",@"makes",@"making",@"made",
+             @"all",@"no",@"none",@"would",
              @"just",
-             @"know",@"knows",@"knew",@"known",@"knowing",
-             @"take",@"takes",@"taking",@"taken",
              @"people",@"good",@"better",@"best",@"some",@"could",@"many",@"most",@"any",@"few",@"several",
-             @"see",@"sees",@"saw",@"seen",@"seeing",
              @"other",@"others",@"than",@"now",@"today",@"today's",
-             @"look",@"looks",@"looking",@"looked",@"only",
-             @"come",@"comes",@"came",@"coming",
              @"it's",
-             @"think",@"thinks",@"thought",@"thinking",
-             @"use",@"used",@"using",@"uses",
-             @"work",@"working",@"workings",@"worked",@"works",
-             @"even",@"well",@"way",@"ways",@"new",
-             @"wants",@"want",@"wanting",@"wanted"
-             ,@"give",@"giving",@"gave",@"given",@"gives"];
+             @"even",@"well",@"way",@"ways",@"new"];
 }
 
 - (NSArray *)questions
@@ -194,6 +203,7 @@
     [ignoredWords addObjectsFromArray:[self conjunctions]];
     [ignoredWords addObjectsFromArray:[self miscellaneous]];
     [ignoredWords addObjectsFromArray:[self questions]];
+    [ignoredWords addObjectsFromArray:[self allVerbs]];
     
     // add prepositions
     //
