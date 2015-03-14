@@ -46,14 +46,14 @@
 - (IBAction)loadFileButtonTapped:(UIBarButtonItem *)sender
 {
     [self removeKeyboard];
-    NSLog(@"button tapped");
+    //NSLog(@"button tapped");
     [[DBChooser defaultChooser] openChooserForLinkType:DBChooserLinkTypeDirect fromViewController:self completion:^(NSArray *results)
      {
          if ([results count])
          {
              DBChooserResult *result = [results firstObject];
              NSURL *url = result.link;
-             NSLog(@"link is %@", url);
+             //NSLog(@"link is %@", url);
              [self loadTextFileFromURL:url];
          }
          else
@@ -73,7 +73,18 @@
                                                               encoding: NSUTF8StringEncoding
                                                                  error: &error];
         self.textView.text = textString;
+        [self.textStorage saveText:self.textView.text];
     }
+    else
+    {
+        [self alertUserThatFileSelectedWasNotTextFile];
+    }
+}
+
+-(void)alertUserThatFileSelectedWasNotTextFile
+{
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Invalid File Format" message:@"Only .txt files are currently supported. Please select a .txt file to load." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil];
+    [alertView show];
 }
 
 # pragma mark Segue to options
