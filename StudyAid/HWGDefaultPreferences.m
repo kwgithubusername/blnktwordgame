@@ -47,164 +47,187 @@
     [[NSUserDefaults standardUserDefaults] registerDefaults:defaultHighlighterColor];
 }
 
-- (NSArray *)articles
+- (NSSet *)articles
 {
-    return @[@"a",@"an",@"the"];
+    NSSet *set = [[NSSet alloc] initWithObjects:@"a",@"an",@"the", nil];
+    return set;
 }
 
-- (NSArray *)pronouns
+- (NSSet *)pronouns
 {
-    return @[@"I",@"me",@"you",@"theirs",@"their",@"mine",@"your",@"yours",@"he",@"she",@"it",@"they",@"them",@"him",@"her",@"his",@"hers",@"its",@"himself",@"herself",@"myself",@"yourself",@"itself",@"this",@"that",@"here",@"there",@"these",@"those",@"my",@"our",@"ours",@"we",@"us"];
+    NSSet *set = [[NSSet alloc] initWithObjects:@"I",@"me",@"you",@"theirs",@"their",@"mine",@"your",@"yours",@"he",@"she",@"it",@"they",@"them",@"him",@"her",@"his",@"hers",@"its",@"himself",@"herself",@"myself",@"yourself",@"itself",@"this",@"that",@"here",@"there",@"these",@"those",@"my",@"our",@"ours",@"we",@"us", nil];
+    return set;
 }
 
-- (NSArray *)prepositions
+- (NSSet *)prepositions
 {
-    return @[@"to",@"of",@"in",@"for",@"with",@"on",@"at",@"from",@"up",@"down",@"out",@"about",@"into",@"back",@"over",@"under",@"forward",@"after",@"before"];
+    NSSet *set = [[NSSet alloc] initWithObjects:@"to",@"of",@"in",@"for",@"with",@"on",@"at",@"from",@"up",@"down",@"out",@"about",@"into",@"back",@"over",@"under",@"forward",@"after",@"before", nil];
+    return set;
 }
 
-- (NSArray *)conjunctions
+- (NSSet *)conjunctions
 {
-    return @[@"and",@"or",@"if",@"but",@"as",@"by",@"then",@"so",@"because",@"since",@"also",@"first",@"next",@"finally",@"furthermore"];
+    NSSet *set = [[NSSet alloc] initWithObjects:@"and",@"or",@"if",@"but",@"as",@"by",@"then",@"so",@"because",@"since",@"also",@"first",@"next",@"finally",@"furthermore", nil];
+    return set;
 }
 
 #pragma mark Verb conjugation
 
-- (NSArray *)verbBe
+- (NSSet *)verbBe
 {
-    return @[@"is",@"was",@"been",@"being",@"be",@"were",@"are"];
+    NSSet *set = [[NSSet alloc] initWithObjects:@"is",@"was",@"been",@"being",@"be",@"were",@"are", nil];
+    return set;
 }
 
-- (NSArray *)verbHave
+- (NSSet *)verbHave
 {
-    return @[@"has",@"have",@"had",@"having"]; //having is new
+    NSSet *set = [[NSSet alloc] initWithObjects:@"has",@"have",@"had",@"having", nil];
+    return set;
 }
 
-- (NSArray *)verbLike
+- (NSSet *)verbLike
 {
-    return @[@"like",@"likes",@"liked",@"liking",@"likings"];
+    NSSet *set = [[NSSet alloc] initWithObjects:@"like",@"likes",@"liked",@"liking",@"likings", nil];
+    return set;
 }
 
-- (NSArray *)verbDo
+- (NSSet *)verbDo
 {
-    return @[@"do",@"does",@"doing",@"done",@"did"];
+    NSSet *set = [[NSSet alloc] initWithObjects:@"do",@"does",@"doing",@"done",@"did", nil];
+    return set;
 }
 
-- (NSArray *)verbGet
+- (NSSet *)verbGet
 {
-    return @[@"get",@"gets",@"getting",@"got",@"gotten"];
+    NSSet *set = [[NSSet alloc] initWithObjects:@"get",@"gets",@"getting",@"got",@"gotten", nil];
+    return set;
 }
 
-- (NSArray *)verbGo
+- (NSSet *)verbGo
 {
-    return @[@"go",@"went",@"going",@"gone",@"goes"]; //goes is new
+    NSSet *set = [[NSSet alloc] initWithObjects:@"go",@"went",@"going",@"gone",@"goes", nil];
+    return set;
 }
 
-- (NSArray *)verbMake
+- (NSSet *)verbMake
 {
-    return @[@"make",@"makes",@"making",@"made"];
+    NSSet *set = [[NSSet alloc] initWithObjects:@"make",@"makes",@"making",@"made", nil];
+    return set;
 }
 
-- (NSArray *)verbKnow
+- (NSSet *)verbKnow
 {
-    return @[@"know",@"knows",@"knew",@"known",@"knowing"];
+    NSSet *set = [[NSSet alloc] initWithObjects:@"know",@"knows",@"knew",@"known",@"knowing", nil];
+    return set;
 }
 
-- (NSArray *)verbTake
+- (NSSet *)verbTake
 {
-    return @[@"take",@"takes",@"taking",@"taken",@"took"]; //took is new
+    NSSet *set = [[NSSet alloc] initWithObjects:@"take",@"takes",@"taking",@"taken",@"took", nil];
+    return set;
 }
 
-- (NSArray *)verbSee
+- (NSSet *)verbSee
 {
-    return @[@"see",@"sees",@"saw",@"seen",@"seeing"];
+    NSSet *set = [[NSSet alloc] initWithObjects:@"see",@"sees",@"saw",@"seen",@"seeing", nil];
+    return set;
 }
 
-- (NSArray *)verbLook
+- (NSSet *)verbLook
 {
-    return @[@"look",@"looks",@"looking",@"looked"];
+    NSSet *set = [[NSSet alloc] initWithObjects:@"look",@"looks",@"looking",@"looked", nil];
+    return set;
 }
 
-- (NSArray *)verbCome
+- (NSSet *)verbCome
 {
-    return @[@"come",@"comes",@"came",@"coming"];
+    NSSet *set = [[NSSet alloc] initWithObjects:@"come",@"comes",@"came",@"coming", nil];
+    return set;
 }
 
-- (NSArray *)verbThink
+- (NSSet *)verbThink
 {
-    return @[@"think",@"thinks",@"thought",@"thinking"];
+    NSSet *set = [[NSSet alloc] initWithObjects:@"think",@"thinks",@"thought",@"thinking", nil];
+    return set;
 }
 
-- (NSArray *)verbUse
+- (NSSet *)verbUse
 {
-    return @[@"use",@"used",@"using",@"uses"];
+    NSSet *set = [[NSSet alloc] initWithObjects:@"use",@"used",@"using",@"uses", nil];
+    return set;
 }
 
-- (NSArray *)verbWork
+- (NSSet *)verbWork
 {
-    return @[@"work",@"working",@"workings",@"worked",@"works"];
+    NSSet *set = [[NSSet alloc] initWithObjects:@"work",@"working",@"workings",@"worked",@"works", nil];
+    return set;
 }
 
-- (NSArray *)verbWant
+- (NSSet *)verbWant
 {
-    return @[@"wants",@"want",@"wanting",@"wanted"];
+    NSSet *set = [[NSSet alloc] initWithObjects:@"wants",@"want",@"wanting",@"wanted", nil];
+    return set;
 }
 
-- (NSArray *)verbGive
+- (NSSet *)verbGive
 {
-    return @[@"give",@"giving",@"gave",@"given",@"gives"];
+    NSSet *set = [[NSSet alloc] initWithObjects:@"give",@"giving",@"gave",@"given",@"gives", nil];
+    return set;
 }
 
-- (NSArray *)allVerbs
+- (NSSet *)allVerbs
 {
-    NSMutableArray *allVerbsMutableArray = [[NSMutableArray alloc] init];
-    [allVerbsMutableArray addObjectsFromArray:[self verbBe]];
-    [allVerbsMutableArray addObjectsFromArray:[self verbCome]];
-    [allVerbsMutableArray addObjectsFromArray:[self verbDo]];
-    [allVerbsMutableArray addObjectsFromArray:[self verbGet]];
-    [allVerbsMutableArray addObjectsFromArray:[self verbGive]];
-    [allVerbsMutableArray addObjectsFromArray:[self verbGo]];
-    [allVerbsMutableArray addObjectsFromArray:[self verbHave]];
-    [allVerbsMutableArray addObjectsFromArray:[self verbKnow]];
-    [allVerbsMutableArray addObjectsFromArray:[self verbLike]];
-    [allVerbsMutableArray addObjectsFromArray:[self verbLook]];
-    [allVerbsMutableArray addObjectsFromArray:[self verbMake]];
-    [allVerbsMutableArray addObjectsFromArray:[self verbSee]];
-    [allVerbsMutableArray addObjectsFromArray:[self verbTake]];
-    [allVerbsMutableArray addObjectsFromArray:[self verbThink]];
-    [allVerbsMutableArray addObjectsFromArray:[self verbUse]];
-    [allVerbsMutableArray addObjectsFromArray:[self verbWant]];
-    [allVerbsMutableArray addObjectsFromArray:[self verbWork]];
-    return allVerbsMutableArray;
+    NSMutableSet *allVerbsMutableSet = [[NSMutableSet alloc] init];
+    [allVerbsMutableSet addObjectsFromArray:[[self verbBe] allObjects]];
+    [allVerbsMutableSet addObjectsFromArray:[[self verbCome] allObjects]];
+    [allVerbsMutableSet addObjectsFromArray:[[self verbDo] allObjects]];
+    [allVerbsMutableSet addObjectsFromArray:[[self verbGet] allObjects]];
+    [allVerbsMutableSet addObjectsFromArray:[[self verbGive] allObjects]];
+    [allVerbsMutableSet addObjectsFromArray:[[self verbGo] allObjects]];
+    [allVerbsMutableSet addObjectsFromArray:[[self verbHave] allObjects]];
+    [allVerbsMutableSet addObjectsFromArray:[[self verbKnow] allObjects]];
+    [allVerbsMutableSet addObjectsFromArray:[[self verbLike] allObjects]];
+    [allVerbsMutableSet addObjectsFromArray:[[self verbLook] allObjects]];
+    [allVerbsMutableSet addObjectsFromArray:[[self verbMake] allObjects]];
+    [allVerbsMutableSet addObjectsFromArray:[[self verbSee] allObjects]];
+    [allVerbsMutableSet addObjectsFromArray:[[self verbTake] allObjects]];
+    [allVerbsMutableSet addObjectsFromArray:[[self verbThink] allObjects]];
+    [allVerbsMutableSet addObjectsFromArray:[[self verbUse] allObjects]];
+    [allVerbsMutableSet addObjectsFromArray:[[self verbWant] allObjects]];
+    [allVerbsMutableSet addObjectsFromArray:[[self verbWork] allObjects]];
+    return allVerbsMutableSet;
 }
 
-- (NSArray *)miscellaneous
+- (NSSet *)miscellaneous
 {
-    return @[@"will",
-             @"can",@"such",@"not",
-             @"all",@"no",@"none",@"would",
-             @"just",
-             @"people",@"good",@"better",@"best",@"some",@"could",@"many",@"most",@"any",@"few",@"several",
-             @"other",@"others",@"than",@"now",@"today",@"today's",
-             @"it's",
-             @"even",@"well",@"way",@"ways",@"new",
-             @"very"];
+    NSSet *set = [[NSSet alloc] initWithObjects:@"will",
+                  @"can",@"such",@"not",
+                  @"all",@"no",@"none",@"would",
+                  @"just",
+                  @"people",@"good",@"better",@"best",@"some",@"could",@"many",@"most",@"any",@"few",@"several",
+                  @"other",@"others",@"than",@"now",@"today",@"today's",
+                  @"it's",
+                  @"even",@"well",@"way",@"ways",@"new",
+                  @"very", nil];
+    return set;
 }
 
-- (NSArray *)questions
+- (NSSet *)questions
 {
-    return @[@"what",@"who",@"when",@"where",@"why",@"which",@"how"];
+    NSSet *set = [[NSSet alloc] initWithObjects:@"what",@"who",@"when",@"where",@"why",@"which",@"how", nil];
+    return set;
 }
 
 - (NSArray *)defaultWordsToIgnore
 {
     NSMutableArray *ignoredWords = [[NSMutableArray alloc] init];
-    [ignoredWords addObjectsFromArray:[self pronouns]];
-    [ignoredWords addObjectsFromArray:[self articles]];
-    [ignoredWords addObjectsFromArray:[self prepositions]];
-    [ignoredWords addObjectsFromArray:[self conjunctions]];
-    [ignoredWords addObjectsFromArray:[self miscellaneous]];
-    [ignoredWords addObjectsFromArray:[self questions]];
-    [ignoredWords addObjectsFromArray:[self allVerbs]];
+    [ignoredWords addObjectsFromArray:[[self pronouns] allObjects]];
+    [ignoredWords addObjectsFromArray:[[self articles] allObjects]];
+    [ignoredWords addObjectsFromArray:[[self prepositions]allObjects]];
+    [ignoredWords addObjectsFromArray:[[self conjunctions]allObjects]];
+    [ignoredWords addObjectsFromArray:[[self miscellaneous] allObjects]];
+    [ignoredWords addObjectsFromArray:[[self questions] allObjects]];
+    [ignoredWords addObjectsFromArray:[[self allVerbs]allObjects]];
     
     // add prepositions
     //

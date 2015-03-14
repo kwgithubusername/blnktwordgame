@@ -74,7 +74,7 @@ NSString * const StudyAidWordsToIgnoreAltPrefKey = @"StudyAidWordsToIgnorePrefKe
         
     }
     
-    NSLog(@"Filtered Words:%@", mutableArrayToReturn);
+    //NSLog(@"Filtered Words:%@", mutableArrayToReturn);
     
     return mutableArrayToReturn;
 }
