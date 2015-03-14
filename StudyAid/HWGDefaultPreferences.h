@@ -19,7 +19,7 @@ static NSString * const StudyAidWillHighlightInSequencePrefKey = @"StudyAidWillH
 -(void)loadDefaults;
 -(void)setSliderValueUsingInt:(int)value;
 -(int)getSliderValue;
-- (NSArray *)defaultCharactersToTrim;
-- (NSArray *)defaultWordsToIgnore;
+- (NSSet *)defaultCharactersToTrim;
+- (NSSet *)defaultWordsToIgnore;
 
 @end

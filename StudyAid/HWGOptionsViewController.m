@@ -175,15 +175,15 @@
 
 -(void)clearAllEntriesForTableView:(UITableView *)tableView
 {
-    NSArray *emptyArray = [[NSArray alloc] init];
+    NSSet *emptySet = [[NSSet alloc] init];
     
     if ([tableView isEqual:self.wordToIgnoreTableView])
     {
-        [self.wordsToIgnore saveWords:emptyArray];
+        [self.wordsToIgnore saveWords:emptySet];
     }
     else if ([tableView isEqual:self.characterToTrimTableView])
     {
-        [self.charactersToTrim saveCharacters:emptyArray];
+        [self.charactersToTrim saveCharacters:emptySet];
     }
     [self.scrollView scrollRectToVisible:CGRectMake(1,1,1,1) animated:YES];
     [self loadColorAndWordsAndCharacters];
@@ -449,7 +449,8 @@
             [self.characterToTrimTableView insertRowsAtIndexPaths:[NSArray arrayWithObject:indexPathForCharacter] withRowAnimation:UITableViewRowAnimationFade];
             
             // Write to file
-            [self.charactersToTrim saveCharacters:self.charactersToTrimMutableArray];
+            NSSet *characterSet = [[NSSet alloc] initWithArray:self.charactersToTrimMutableArray];
+            [self.charactersToTrim saveCharacters:characterSet];
             
             [self.characterToTrimTableView reloadData];
             
@@ -483,8 +484,10 @@
             
             [self.wordToIgnoreTableView insertRowsAtIndexPaths:[NSArray arrayWithObject:indexPathForWord] withRowAnimation:UITableViewRowAnimationFade];
             
+            NSSet *wordSet = [[NSSet alloc] initWithArray:self.wordsToIgnoreMutableArray];
+            
             // Write to file
-            [self.wordsToIgnore saveWords:self.wordsToIgnoreMutableArray];
+            [self.wordsToIgnore saveWords:wordSet];
             
             [self.wordToIgnoreTableView reloadData];
             
@@ -522,9 +525,12 @@
         [self.charactersToTrimMutableArray removeObjectAtIndex:indexPath.row]:
         [self.wordsToIgnoreMutableArray removeObjectAtIndex:indexPath.row];
         
+        NSSet *characterSet = [[NSSet alloc] initWithArray:self.charactersToTrimMutableArray];
+        NSSet *wordSet = [[NSSet alloc] initWithArray:self.wordsToIgnoreMutableArray];
+        
         (tableView == self.characterToTrimTableView) ?
-        [self.charactersToTrim saveCharacters:self.charactersToTrimMutableArray]:
-        [self.wordsToIgnore saveWords:self.wordsToIgnoreMutableArray];
+        [self.charactersToTrim saveCharacters:characterSet]:
+        [self.wordsToIgnore saveWords:wordSet];
         
         [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
     };
@@ -544,7 +550,7 @@
     };
     
     BOOL (^canEditRowsBlock)() = ^BOOL() {
-        
+        //return YES;
         return self.hasPurchasedEditingFeatures ? YES : NO;
     };
     
@@ -699,11 +705,11 @@
     [self unlockColors];
     
         [self.wordsToIgnoreMutableArray removeAllObjects];
-        [self.wordsToIgnoreMutableArray addObjectsFromArray:[self.wordsToIgnore loadWords]];
+        [self.wordsToIgnoreMutableArray addObjectsFromArray:[[self.wordsToIgnore loadWords] allObjects]];
         [self.wordsToIgnoreMutableArray sortUsingSelector:@selector(localizedCaseInsensitiveCompare:)];
 
         [self.charactersToTrimMutableArray removeAllObjects];
-        [self.charactersToTrimMutableArray addObjectsFromArray:[self.charactersToTrim loadCharacters]];
+        [self.charactersToTrimMutableArray addObjectsFromArray:[[self.charactersToTrim loadCharacters] allObjects]];
 
 }
 

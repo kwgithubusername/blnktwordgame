@@ -54,7 +54,7 @@ NSString * const StudyAidWordsToIgnoreAltPrefKey = @"StudyAidWordsToIgnorePrefKe
 -(NSMutableArray *)filterWordsFromMutableArray:(NSMutableArray *)mutableArray
 {
     NSMutableArray *ignoredWords = [[NSMutableArray alloc] init];
-    [ignoredWords addObjectsFromArray:[[NSUserDefaults standardUserDefaults] objectForKey:StudyAidWordsToIgnoreAltPrefKey]];
+    [ignoredWords addObjectsFromArray:[[[NSUserDefaults standardUserDefaults] objectForKey:StudyAidWordsToIgnoreAltPrefKey] allObjects]];
     
     // Get rid of invalid spaces
     [ignoredWords addObjectsFromArray:@[@" ",@""]];

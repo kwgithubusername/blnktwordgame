@@ -24,7 +24,7 @@ NSString * const pathStringToStoreCharacters = @"/charactersToTrim.txt";
     return self;
 }
 
--(void)saveCharacters:(NSArray *)characters
+-(void)saveCharacters:(NSSet *)characters
 {
     /*
     NSString *documentDirectories = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
@@ -36,11 +36,11 @@ NSString * const pathStringToStoreCharacters = @"/charactersToTrim.txt";
         NSLog(@"Error saving text: %@", error);
     }*/
     
-    [[NSUserDefaults standardUserDefaults] setValue:characters forKey:StudyAidCharactersToTrimPrefKey];
+    [[NSUserDefaults standardUserDefaults] setValue:[characters allObjects] forKey:StudyAidCharactersToTrimPrefKey];
     
 }
 
--(NSArray *)loadCharacters
+-(NSSet *)loadCharacters
 {/*
     NSString *documentDirectories = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
     // Get one and only one document directory from that list
@@ -64,11 +64,9 @@ NSString * const pathStringToStoreCharacters = @"/charactersToTrim.txt";
         }
     }*/
     
-    NSMutableArray *charactersToReturn = [[NSMutableArray alloc] init];
+    NSSet *charactersToReturnSet = [[NSSet alloc] initWithArray:[[NSUserDefaults standardUserDefaults] valueForKey:StudyAidCharactersToTrimPrefKey]];
     
-    [charactersToReturn addObjectsFromArray:[[NSUserDefaults standardUserDefaults] valueForKey:StudyAidCharactersToTrimPrefKey]];
-    
-    return charactersToReturn;
+    return charactersToReturnSet;
 }
 
 @end

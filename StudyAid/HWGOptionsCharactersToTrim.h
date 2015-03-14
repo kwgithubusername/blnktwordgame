@@ -14,7 +14,7 @@
 @interface HWGOptionsCharactersToTrim : NSObject
 
 -(instancetype)init;
--(void)saveCharacters:(NSArray *)characters;
--(NSArray *)loadCharacters;
+-(void)saveCharacters:(NSSet *)characters;
+-(NSSet *)loadCharacters;
 
 @end

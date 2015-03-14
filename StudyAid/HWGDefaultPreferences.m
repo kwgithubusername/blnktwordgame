@@ -36,10 +36,10 @@
     NSDictionary *defaultPercentage = [NSDictionary dictionaryWithObject:[NSNumber numberWithInt:10] forKey:StudyAidHiddenWordPercentagePrefKey];
     [[NSUserDefaults standardUserDefaults] registerDefaults:defaultPercentage];
     
-    NSDictionary *defaultWordsToIgnore = [NSDictionary dictionaryWithObject:[self defaultWordsToIgnore] forKey:StudyAidWordsToIgnoreDPPrefKey];
+    NSDictionary *defaultWordsToIgnore = [NSDictionary dictionaryWithObject:[[self defaultWordsToIgnore] allObjects] forKey:StudyAidWordsToIgnoreDPPrefKey];
     [[NSUserDefaults standardUserDefaults] registerDefaults:defaultWordsToIgnore];
     
-    NSDictionary *defaultCharsToTrim = [NSDictionary dictionaryWithObject:[self defaultCharactersToTrim] forKey:StudyAidCharactersToTrimDPPrefKey];
+    NSDictionary *defaultCharsToTrim = [NSDictionary dictionaryWithObject:[[self defaultCharactersToTrim] allObjects] forKey:StudyAidCharactersToTrimDPPrefKey];
     [[NSUserDefaults standardUserDefaults] registerDefaults:defaultCharsToTrim];
     
     NSData *colorData = [NSKeyedArchiver archivedDataWithRootObject:[UIColor yellowColor]];
@@ -218,9 +218,9 @@
     return set;
 }
 
-- (NSArray *)defaultWordsToIgnore
+- (NSSet *)defaultWordsToIgnore
 {
-    NSMutableArray *ignoredWords = [[NSMutableArray alloc] init];
+    NSMutableSet *ignoredWords = [[NSMutableSet alloc] init];
     [ignoredWords addObjectsFromArray:[[self pronouns] allObjects]];
     [ignoredWords addObjectsFromArray:[[self articles] allObjects]];
     [ignoredWords addObjectsFromArray:[[self prepositions]allObjects]];
@@ -237,9 +237,10 @@
     return ignoredWords;
 }
 
-- (NSArray *)defaultCharactersToTrim
+- (NSSet *)defaultCharactersToTrim
 {
-    return @[@".",@",",@";",@":",@"?",@"!",@"(",@")",@"/",@"\\",@"<",@">",@"\"",@"'",@"{",@"}",@"[",@"]",@"-"];
+    NSSet *set = [[NSSet alloc] initWithObjects:@".",@",",@";",@":",@"?",@"!",@"(",@")",@"/",@"\\",@"<",@">",@"\"",@"'",@"{",@"}",@"[",@"]",@"-", nil];
+    return set;
 }
 
 

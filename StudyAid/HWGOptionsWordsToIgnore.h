@@ -13,7 +13,7 @@
 @interface HWGOptionsWordsToIgnore : NSObject
 
 -(instancetype)init;
--(void)saveWords:(NSArray *)words;
--(NSArray *)loadWords;
+-(void)saveWords:(NSSet *)words;
+-(NSSet *)loadWords;
 
 @end

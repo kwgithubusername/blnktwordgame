@@ -24,7 +24,7 @@ NSString * const pathStringToStoreWords = @"/wordsToStore.txt";
     return self;
 }
 
--(void)saveWords:(NSArray *)words;
+-(void)saveWords:(NSSet *)words;
 {/*
     NSString *documentDirectories = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
     // Get one and only one document directory from that list
@@ -35,10 +35,10 @@ NSString * const pathStringToStoreWords = @"/wordsToStore.txt";
         NSLog(@"Error saving text: %@", error);
     }
     */
-    [[NSUserDefaults standardUserDefaults] setValue:words forKey:StudyAidWordsToIgnorePrefKey];
+    [[NSUserDefaults standardUserDefaults] setValue:[words allObjects] forKey:StudyAidWordsToIgnorePrefKey];
 }
 
--(NSArray *)loadWords
+-(NSSet *)loadWords
 {/*
     NSString *documentDirectories = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
     // Get one and only one document directory from that list
@@ -61,9 +61,8 @@ NSString * const pathStringToStoreWords = @"/wordsToStore.txt";
             [wordsToReturn addObjectsFromArray:words];
         }
     }*/
-    NSMutableArray *wordsToReturn = [[NSMutableArray alloc] init];
-    [wordsToReturn addObjectsFromArray:[[NSUserDefaults standardUserDefaults] valueForKey:StudyAidWordsToIgnorePrefKey]];
-    return wordsToReturn;
+    NSSet *wordsToReturnSet = [[NSSet alloc] initWithArray:[[NSUserDefaults standardUserDefaults] valueForKey:StudyAidWordsToIgnorePrefKey]];
+    return wordsToReturnSet;
 }
 
 @end
