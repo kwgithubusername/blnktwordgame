@@ -6,7 +6,7 @@
 //  Copyright (c) 2014 Hi Range. All rights reserved.
 //
 
-#import "ViewController.h"
+#import "HWGTextViewController.h"
 #import "HiddenWordGame.h"
 #import "HWGTextViewText.h"
 #import "HWGOptionsViewController.h"
@@ -15,7 +15,7 @@
 #import "HWGOptionsWordsToIgnore.h"
 #import "HWGDefaultPreferences.h"
 
-@interface ViewController ()
+@interface HWGTextViewController ()
 @property (weak, nonatomic) IBOutlet UIView *viewToInsertBackgroundImage;
 @property (weak, nonatomic) IBOutlet UITextView *textView;
 @property (strong, nonatomic) HiddenWordGame *wordGame;
@@ -37,7 +37,15 @@
 
 @end
 
-@implementation ViewController
+@implementation HWGTextViewController
+
+# pragma mark Dropbox
+
+- (IBAction)loadFileButtonTapped:(UIBarButtonItem *)sender
+{
+    
+}
+
 
 # pragma mark Segue to options
 

@@ -21,10 +21,10 @@
             </objects>
             <point key="canvasLocation" x="-446" y="197"/>
         </scene>
-        <!--View Controller-->
+        <!--Text View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="HWGTextViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
                         <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
@@ -229,7 +229,13 @@
                             <constraint firstAttribute="centerX" secondItem="VUh-aB-btj" secondAttribute="centerX" id="uMr-tA-MQg"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="wGU-dT-I1k"/>
+                    <navigationItem key="navigationItem" id="wGU-dT-I1k">
+                        <barButtonItem key="leftBarButtonItem" systemItem="organize" id="mQh-8q-yB6">
+                            <connections>
+                                <action selector="loadFileButtonTapped:" destination="BYZ-38-t0r" id="A8d-9E-5Le"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="checkButton" destination="uKj-nR-0U5" id="5hZ-VV-1S0"/>
                         <outlet property="hintButton" destination="uiS-aT-mEO" id="uZU-bd-vsT"/>

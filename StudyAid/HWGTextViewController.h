@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "HWGOptionsViewController.h"
 
-@interface ViewController : UIViewController <UITextViewDelegate, UITextFieldDelegate, UIGestureRecognizerDelegate>
+@interface HWGTextViewController : UIViewController <UITextViewDelegate, UITextFieldDelegate, UIGestureRecognizerDelegate>
 
 @end
 
