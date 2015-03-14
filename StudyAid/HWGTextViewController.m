@@ -14,8 +14,10 @@
 #import "HWGOptionsCharactersToTrim.h"
 #import "HWGOptionsWordsToIgnore.h"
 #import "HWGDefaultPreferences.h"
+#import <DBChooser/DBChooser.h>
 
 @interface HWGTextViewController ()
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *uploadBarButton;
 @property (weak, nonatomic) IBOutlet UIView *viewToInsertBackgroundImage;
 @property (weak, nonatomic) IBOutlet UITextView *textView;
 @property (strong, nonatomic) HiddenWordGame *wordGame;
@@ -43,9 +45,36 @@
 
 - (IBAction)loadFileButtonTapped:(UIBarButtonItem *)sender
 {
-    
+    [self removeKeyboard];
+    NSLog(@"button tapped");
+    [[DBChooser defaultChooser] openChooserForLinkType:DBChooserLinkTypeDirect fromViewController:self completion:^(NSArray *results)
+     {
+         if ([results count])
+         {
+             DBChooserResult *result = [results firstObject];
+             NSURL *url = result.link;
+             NSLog(@"link is %@", url);
+             [self loadTextFileFromURL:url];
+         }
+         else
+         {
+             
+         }
+     }];
 }
 
+-(void)loadTextFileFromURL:(NSURL *)url
+{
+    NSString *URLString = [[NSString alloc] initWithFormat:@"%@",url];
+    if ([URLString containsString:@".txt"])
+    {
+        NSError *error = nil;
+        NSString *textString = [[NSString alloc] initWithContentsOfURL:url
+                                                              encoding: NSUTF8StringEncoding
+                                                                 error: &error];
+        self.textView.text = textString;
+    }
+}
 
 # pragma mark Segue to options
 
@@ -123,6 +152,7 @@
 
 -(void)textViewDidEndEditing:(UITextView *)textView
 {
+    NSLog(@"textview ended editing");
     [self.textStorage saveText:self.textView.text];
 }
 
@@ -376,6 +406,12 @@
 -(void)tapReceived:(UITapGestureRecognizer *)tapGestureRecognizer
 {
     //NSLog(@"TAP RECEIVED");
+    [self removeKeyboard];
+
+}
+
+-(void)removeKeyboard
+{
     if ([self.textField isFirstResponder])
     {
         [self.textField resignFirstResponder];
@@ -384,7 +420,6 @@
     {
         [self.textView resignFirstResponder];
     }
-
 }
 
 -(CGRect)getLargestSizeOfFrameSize:(CGSize)size
@@ -455,7 +490,7 @@
     // create a view which covers most of the tap bar to
     // manage the gestures - if we use the navigation bar
     // it interferes with the nav buttons
-    CGRect frame = CGRectMake(0, 0, [self getLargestSizeOfFrameSize:self.view.frame.size].size.height, self.navigationController.navigationBar.frame.size.height);
+    CGRect frame = CGRectMake(50, 0, [self getLargestSizeOfFrameSize:self.view.frame.size].size.height, self.navigationController.navigationBar.frame.size.height);
     UIView *navBarTapView = [[UIView alloc] initWithFrame:frame];
     [self.navigationController.navigationBar addSubview:navBarTapView];
     navBarTapView.backgroundColor = [UIColor clearColor];

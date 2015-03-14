@@ -186,7 +186,8 @@
              @"people",@"good",@"better",@"best",@"some",@"could",@"many",@"most",@"any",@"few",@"several",
              @"other",@"others",@"than",@"now",@"today",@"today's",
              @"it's",
-             @"even",@"well",@"way",@"ways",@"new"];
+             @"even",@"well",@"way",@"ways",@"new",
+             @"very"];
 }
 
 - (NSArray *)questions

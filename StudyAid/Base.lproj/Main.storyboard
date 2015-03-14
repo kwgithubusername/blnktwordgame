@@ -245,6 +245,7 @@
                         <outlet property="startButton" destination="Uif-dR-hza" id="SSe-s3-NgX"/>
                         <outlet property="textField" destination="DmK-s3-zJj" id="hGb-Nk-AZe"/>
                         <outlet property="textView" destination="G5b-fK-TL1" id="mhz-J3-HPk"/>
+                        <outlet property="uploadBarButton" destination="mQh-8q-yB6" id="JWz-p8-yal"/>
                         <outlet property="viewToInsertBackgroundImage" destination="9Lb-64-RU4" id="ToM-ZT-5Br"/>
                     </connections>
                 </viewController>
@@ -398,10 +399,6 @@
                                                         </connections>
                                                     </tableViewCell>
                                                 </prototypes>
-                                                <connections>
-                                                    <outlet property="dataSource" destination="f6h-dc-DRB" id="Ub3-e5-7dJ"/>
-                                                    <outlet property="delegate" destination="f6h-dc-DRB" id="EZm-9U-kZl"/>
-                                                </connections>
                                             </tableView>
                                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="fY5-e5-mwx">
                                                 <rect key="frame" x="139" y="360" width="444" height="200"/>
@@ -429,10 +426,6 @@
                                                         </connections>
                                                     </tableViewCell>
                                                 </prototypes>
-                                                <connections>
-                                                    <outlet property="dataSource" destination="f6h-dc-DRB" id="4gn-2F-ZMP"/>
-                                                    <outlet property="delegate" destination="f6h-dc-DRB" id="uM7-5L-6fq"/>
-                                                </connections>
                                             </tableView>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ojh-gx-5SY">
                                                 <rect key="frame" x="304" y="667" width="114" height="30"/>

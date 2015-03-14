@@ -556,51 +556,6 @@
     self.characterToTrimTableView.delegate = self.dataSource;
 }
 
-//-(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-//{
-//    int numberOfRowsToReturn = 0;
-//    if (tableView == self.wordToIgnoreTableView)
-//    {
-//        numberOfRowsToReturn = (int)[self.wordsToIgnoreMutableArray count];
-//        //NSLog(@"Counting rows:%d", numberOfRowsToReturn);
-//    }
-//    if (tableView == self.characterToTrimTableView)
-//    {
-//        numberOfRowsToReturn = (int)[self.charactersToTrimMutableArray count];
-//    }
-//    return numberOfRowsToReturn;
-//}
-//
-//-(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-//{
-//    return (tableView == self.characterToTrimTableView) ?
-//    [self configureCharCellUsingTableView:self.characterToTrimTableView atIndexPath:indexPath] :
-//    [self configureWordCellUsingTableView:self.wordToIgnoreTableView atIndexPath:indexPath];
-//}
-//
-//- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
-//{
-//    return self.hasPurchasedEditingFeatures ? YES : NO;
-//}
-//
-//- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
-//{
-//    if (editingStyle == UITableViewCellEditingStyleDelete)
-//    {
-//        
-//        (tableView == self.characterToTrimTableView) ?
-//        [self.charactersToTrimMutableArray removeObjectAtIndex:indexPath.row]:
-//        [self.wordsToIgnoreMutableArray removeObjectAtIndex:indexPath.row];
-//        
-//        (tableView == self.characterToTrimTableView) ?
-//        [self.charactersToTrim saveCharacters:self.charactersToTrimMutableArray]:
-//        [self.wordsToIgnore saveWords:self.wordsToIgnoreMutableArray];
-//        
-//        [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
-//        
-//    }
-//}
-
 -(HWGWordToIgnoreTableViewCell *)configureWordCellUsingTableView:(UITableView *)tableView atIndexPath:(NSIndexPath *)indexPath
 {
     HWGWordToIgnoreTableViewCell *cell = (HWGWordToIgnoreTableViewCell *)[tableView dequeueReusableCellWithIdentifier:@"wordToIgnoreTableViewCell" forIndexPath:indexPath];
