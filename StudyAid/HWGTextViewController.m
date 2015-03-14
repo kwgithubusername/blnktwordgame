@@ -299,6 +299,8 @@
         }
     }
     
+    self.filteredWordArray = [self.wordGame.commonWordFilter filterWordsFromMutableArray:self.filteredWordArray];
+    
     //NSLog(@"Filtered and trimmed:%@",self.filteredWordArray);
 }
 

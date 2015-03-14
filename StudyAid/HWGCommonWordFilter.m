@@ -48,6 +48,11 @@ NSString * const StudyAidWordsToIgnoreAltPrefKey = @"StudyAidWordsToIgnorePrefKe
     NSMutableArray *filteredWordArray = [NSMutableArray arrayWithArray:[self separateStringIntoWords:string]];
     
     // Combine ignored words into one array
+    return [self filterWordsFromMutableArray:filteredWordArray];
+}
+
+-(NSMutableArray *)filterWordsFromMutableArray:(NSMutableArray *)mutableArray
+{
     NSMutableArray *ignoredWords = [[NSMutableArray alloc] init];
     [ignoredWords addObjectsFromArray:[[NSUserDefaults standardUserDefaults] objectForKey:StudyAidWordsToIgnoreAltPrefKey]];
     
@@ -55,11 +60,11 @@ NSString * const StudyAidWordsToIgnoreAltPrefKey = @"StudyAidWordsToIgnorePrefKe
     [ignoredWords addObjectsFromArray:@[@" ",@""]];
     
     // Remove ignored words from the array
-    NSMutableArray *mutableArrayToReturn = [[NSMutableArray alloc] initWithArray:filteredWordArray];
+    NSMutableArray *mutableArrayToReturn = [[NSMutableArray alloc] initWithArray:mutableArray];
     
     for (NSString *ignoredWord in ignoredWords)
     {
-        for (NSString *word in filteredWordArray)
+        for (NSString *word in mutableArray)
         {
             if ([word caseInsensitiveCompare:ignoredWord] == NSOrderedSame)
             {
@@ -68,9 +73,9 @@ NSString * const StudyAidWordsToIgnoreAltPrefKey = @"StudyAidWordsToIgnorePrefKe
         }
         
     }
-
-    //NSLog(@"Filtered Words:%@", mutableArrayToReturn);
-
+    
+    NSLog(@"Filtered Words:%@", mutableArrayToReturn);
+    
     return mutableArrayToReturn;
 }
 

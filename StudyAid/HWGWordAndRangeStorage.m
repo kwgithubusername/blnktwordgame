@@ -42,7 +42,7 @@
             [self.indexMutableArray addObject:WordAndRangeMutableArray];
             
             // Prevent embedded words from being added
-            for (NSUInteger i = range.location; i < NSMaxRange(range); i++)
+            for (NSUInteger i = range.location; i <= NSMaxRange(range); i++)
             {
                 [self.rangesMutableSet addObject:[NSNumber numberWithUnsignedInteger:i]];
                 //NSLog(@"NSRangesmutableset is %@", self.rangesMutableSet);

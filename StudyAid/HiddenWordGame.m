@@ -212,10 +212,14 @@
     // Remove invalid characters (e.g. ;,:)
     NSMutableArray *wordArray = self.filteredWordArray;
     
+    //NSLog(@"wordArray is %@", self.filteredWordArray);
+    
     int numberOfWordsToHide = [self loadNumberOfWordsToHideFromMutableArray:wordArray];
     //NSLog(@"word array is %d", [wordArray count]);
     
     NSArray *wordsToHide = [[NSArray alloc] initWithArray:[self loadWordsToHideFromMutableArray:self.filteredWordArray]];
+    
+    
     
     // Get the ranges for every word
     [self loadRangesFromArrayOfWords:wordsToHide inTextView:textView];

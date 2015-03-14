@@ -12,5 +12,5 @@
 
 -(instancetype)init;
 -(NSArray *)filterWordsFromString:(NSString *)string;
-
+-(NSMutableArray *)filterWordsFromMutableArray:(NSMutableArray *)mutableArray;
 @end
