@@ -21,6 +21,7 @@
 		9ECD77E31A62165A0008F3EB /* HWGCharacterToTrimTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9ECD77E21A62165A0008F3EB /* HWGCharacterToTrimTableViewCell.m */; };
 		9ECF202F1AB47EE5009B3C23 /* DBChooser.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 9ECF202D1AB47EE5009B3C23 /* DBChooser.bundle */; };
 		9ECF20301AB47EE5009B3C23 /* DBChooser.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9ECF202E1AB47EE5009B3C23 /* DBChooser.framework */; };
+		9ECF20331AB482C2009B3C23 /* HWGOptionsDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 9ECF20321AB482C2009B3C23 /* HWGOptionsDataSource.m */; };
 		9ECF50331A5B88A6002D2304 /* HWGOptionsCharactersToTrim.m in Sources */ = {isa = PBXBuildFile; fileRef = 9ECF50301A5B88A6002D2304 /* HWGOptionsCharactersToTrim.m */; };
 		9ECF50341A5B88A6002D2304 /* HWGOptionsWordsToIgnore.m in Sources */ = {isa = PBXBuildFile; fileRef = 9ECF50321A5B88A6002D2304 /* HWGOptionsWordsToIgnore.m */; };
 		9ECF50371A5E1090002D2304 /* HWGOptionsColorToStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 9ECF50361A5E1090002D2304 /* HWGOptionsColorToStore.m */; };
@@ -70,6 +71,8 @@
 		9ECD77E21A62165A0008F3EB /* HWGCharacterToTrimTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HWGCharacterToTrimTableViewCell.m; sourceTree = "<group>"; };
 		9ECF202D1AB47EE5009B3C23 /* DBChooser.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = DBChooser.bundle; sourceTree = "<group>"; };
 		9ECF202E1AB47EE5009B3C23 /* DBChooser.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = DBChooser.framework; sourceTree = "<group>"; };
+		9ECF20311AB482C2009B3C23 /* HWGOptionsDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HWGOptionsDataSource.h; sourceTree = "<group>"; };
+		9ECF20321AB482C2009B3C23 /* HWGOptionsDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HWGOptionsDataSource.m; sourceTree = "<group>"; };
 		9ECF502F1A5B88A6002D2304 /* HWGOptionsCharactersToTrim.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HWGOptionsCharactersToTrim.h; sourceTree = "<group>"; };
 		9ECF50301A5B88A6002D2304 /* HWGOptionsCharactersToTrim.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HWGOptionsCharactersToTrim.m; sourceTree = "<group>"; };
 		9ECF50311A5B88A6002D2304 /* HWGOptionsWordsToIgnore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HWGOptionsWordsToIgnore.h; sourceTree = "<group>"; };
@@ -169,6 +172,8 @@
 				9ECD77E21A62165A0008F3EB /* HWGCharacterToTrimTableViewCell.m */,
 				9EC89E391A530C17001E1B34 /* HWGOptionsViewController.h */,
 				9EC89E3A1A530C17001E1B34 /* HWGOptionsViewController.m */,
+				9ECF20311AB482C2009B3C23 /* HWGOptionsDataSource.h */,
+				9ECF20321AB482C2009B3C23 /* HWGOptionsDataSource.m */,
 				9ECF50351A5E1090002D2304 /* HWGOptionsColorToStore.h */,
 				9ECF50361A5E1090002D2304 /* HWGOptionsColorToStore.m */,
 				9ECF502F1A5B88A6002D2304 /* HWGOptionsCharactersToTrim.h */,
@@ -317,6 +322,7 @@
 				9ED835121A5436420071392E /* HWGCommonWordFilter.m in Sources */,
 				9ECD77E01A6216430008F3EB /* HWGWordToIgnoreTableViewCell.m in Sources */,
 				9ED835241A544D1B0071392E /* HWGWordAndRangeStorageToHighlight.m in Sources */,
+				9ECF20331AB482C2009B3C23 /* HWGOptionsDataSource.m in Sources */,
 				9ECF50331A5B88A6002D2304 /* HWGOptionsCharactersToTrim.m in Sources */,
 				9ED8350F1A5434320071392E /* HWGInvalidCharacterRemover.m in Sources */,
 				9ED835271A560AB40071392E /* HWGTextViewText.m in Sources */,

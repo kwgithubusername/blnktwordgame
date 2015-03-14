@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import <StoreKit/StoreKit.h>
 
-@interface HWGOptionsViewController : UIViewController <UITextFieldDelegate, UIGestureRecognizerDelegate, UITableViewDataSource, UITabBarDelegate, UIAlertViewDelegate, SKProductsRequestDelegate, SKPaymentTransactionObserver>
+@interface HWGOptionsViewController : UIViewController <UITextFieldDelegate, UIGestureRecognizerDelegate, UITabBarDelegate, UIAlertViewDelegate, SKProductsRequestDelegate, SKPaymentTransactionObserver>
 
 @property BOOL hasPurchasedEditingFeatures;
 - (IBAction)purchase:(SKProduct *)product;

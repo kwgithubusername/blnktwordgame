@@ -15,11 +15,13 @@
 #import "HWGCharacterToTrimTableViewCell.h"
 #import "HWGWordToIgnoreTableViewCell.h"
 #import "HWGDefaultPreferences.h"
+#import "HWGOptionsDataSource.h"
 
 #define kRemoveAdsProductIdentifier @"com.hirange.woudini.StudyAid.unlockfeatures"
 
 @interface HWGOptionsViewController ()
 @property (weak, nonatomic) IBOutlet UIView *viewToInsertBackgroundImage;
+@property (nonatomic) HWGOptionsDataSource *dataSource;
 @property (weak, nonatomic) IBOutlet UITextField *wordToIgnoreTextField;
 @property (weak, nonatomic) IBOutlet UITableView *wordToIgnoreTableView;
 @property (weak, nonatomic) IBOutlet UITextField *characterToTrimTextField;
@@ -506,27 +508,98 @@
 
 #pragma mark Table View Delegate methods
 
--(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+-(void)setupDataSource
 {
-    int numberOfRowsToReturn = 0;
-    if (tableView == self.wordToIgnoreTableView)
-    {
-        numberOfRowsToReturn = (int)[self.wordsToIgnoreMutableArray count];
-        //NSLog(@"Counting rows:%d", numberOfRowsToReturn);
-    }
-    if (tableView == self.characterToTrimTableView)
-    {
-        numberOfRowsToReturn = (int)[self.charactersToTrimMutableArray count];
-    }
-    return numberOfRowsToReturn;
+    UITableViewCell* (^cellForRowAtIndexPathBlock)(NSIndexPath *indexPath, UITableView *tableView) = ^UITableViewCell*(NSIndexPath *indexPath, UITableView *tableView) {
+        return (tableView == self.characterToTrimTableView) ?
+        [self configureCharCellUsingTableView:self.characterToTrimTableView atIndexPath:indexPath] :
+        [self configureWordCellUsingTableView:self.wordToIgnoreTableView atIndexPath:indexPath];
+    };
+    
+    void (^deleteCellBlock)(NSIndexPath *indexPath, UITableView *tableView) = ^(NSIndexPath *indexPath, UITableView *tableView) {
+        
+        (tableView == self.characterToTrimTableView) ?
+        [self.charactersToTrimMutableArray removeObjectAtIndex:indexPath.row]:
+        [self.wordsToIgnoreMutableArray removeObjectAtIndex:indexPath.row];
+        
+        (tableView == self.characterToTrimTableView) ?
+        [self.charactersToTrim saveCharacters:self.charactersToTrimMutableArray]:
+        [self.wordsToIgnore saveWords:self.wordsToIgnoreMutableArray];
+        
+        [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
+    };
+    
+    NSInteger (^numberOfRowsInSectionBlock)(UITableView *tableView) = ^NSInteger(UITableView *tableView) {
+        int numberOfRowsToReturn = 0;
+        if (tableView == self.wordToIgnoreTableView)
+        {
+            numberOfRowsToReturn = (int)[self.wordsToIgnoreMutableArray count];
+            //NSLog(@"Counting rows:%d", numberOfRowsToReturn);
+        }
+        if (tableView == self.characterToTrimTableView)
+        {
+            numberOfRowsToReturn = (int)[self.charactersToTrimMutableArray count];
+        }
+        return numberOfRowsToReturn;
+    };
+    
+    BOOL (^canEditRowsBlock)() = ^BOOL() {
+        
+        return self.hasPurchasedEditingFeatures ? YES : NO;
+    };
+    
+    self.dataSource = [[HWGOptionsDataSource alloc] initWithRowsInSectionBlock:numberOfRowsInSectionBlock CellForRowAtIndexPathBlock:cellForRowAtIndexPathBlock CanEditRowAtIndexPathBlock:canEditRowsBlock DeleteCellBlock:deleteCellBlock];
+    
+    self.wordToIgnoreTableView.dataSource = self.dataSource;
+    self.wordToIgnoreTableView.delegate = self.dataSource;
+    self.characterToTrimTableView.dataSource = self.dataSource;
+    self.characterToTrimTableView.delegate = self.dataSource;
 }
 
--(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    return (tableView == self.characterToTrimTableView) ?
-    [self configureCharCellUsingTableView:self.characterToTrimTableView atIndexPath:indexPath] :
-    [self configureWordCellUsingTableView:self.wordToIgnoreTableView atIndexPath:indexPath];
-}
+//-(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+//{
+//    int numberOfRowsToReturn = 0;
+//    if (tableView == self.wordToIgnoreTableView)
+//    {
+//        numberOfRowsToReturn = (int)[self.wordsToIgnoreMutableArray count];
+//        //NSLog(@"Counting rows:%d", numberOfRowsToReturn);
+//    }
+//    if (tableView == self.characterToTrimTableView)
+//    {
+//        numberOfRowsToReturn = (int)[self.charactersToTrimMutableArray count];
+//    }
+//    return numberOfRowsToReturn;
+//}
+//
+//-(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+//{
+//    return (tableView == self.characterToTrimTableView) ?
+//    [self configureCharCellUsingTableView:self.characterToTrimTableView atIndexPath:indexPath] :
+//    [self configureWordCellUsingTableView:self.wordToIgnoreTableView atIndexPath:indexPath];
+//}
+//
+//- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
+//{
+//    return self.hasPurchasedEditingFeatures ? YES : NO;
+//}
+//
+//- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
+//{
+//    if (editingStyle == UITableViewCellEditingStyleDelete)
+//    {
+//        
+//        (tableView == self.characterToTrimTableView) ?
+//        [self.charactersToTrimMutableArray removeObjectAtIndex:indexPath.row]:
+//        [self.wordsToIgnoreMutableArray removeObjectAtIndex:indexPath.row];
+//        
+//        (tableView == self.characterToTrimTableView) ?
+//        [self.charactersToTrim saveCharacters:self.charactersToTrimMutableArray]:
+//        [self.wordsToIgnore saveWords:self.wordsToIgnoreMutableArray];
+//        
+//        [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
+//        
+//    }
+//}
 
 -(HWGWordToIgnoreTableViewCell *)configureWordCellUsingTableView:(UITableView *)tableView atIndexPath:(NSIndexPath *)indexPath
 {
@@ -548,29 +621,6 @@
         cell.label.text = [self.charactersToTrimMutableArray objectAtIndex:indexPath.row];
     }
     return cell;
-}
-
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    return self.hasPurchasedEditingFeatures ? YES : NO;
-}
-
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    if (editingStyle == UITableViewCellEditingStyleDelete)
-    {
-        
-        (tableView == self.characterToTrimTableView) ?
-        [self.charactersToTrimMutableArray removeObjectAtIndex:indexPath.row]:
-        [self.wordsToIgnoreMutableArray removeObjectAtIndex:indexPath.row];
-        
-        (tableView == self.characterToTrimTableView) ?
-        [self.charactersToTrim saveCharacters:self.charactersToTrimMutableArray]:
-        [self.wordsToIgnore saveWords:self.wordsToIgnoreMutableArray];
-        
-        [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
-        
-    }
 }
 
 #pragma mark View methods
@@ -634,6 +684,9 @@
     self.willHighlightInSequenceSwitch.on = [[NSUserDefaults standardUserDefaults] boolForKey:StudyAidWillHighlightInSequencePrefKey];
     self.characterToTrimTableView.rowHeight = 27;
     self.wordToIgnoreTableView.rowHeight = 27;
+    
+    [self setupDataSource];
+    
     [self registerForKeyboardNotifications];
     //self.scrollView.contentSize = self.view.frame.size;
     UITapGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapReceived:)];
