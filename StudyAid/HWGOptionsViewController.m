@@ -513,45 +513,47 @@
 
 -(void)setupDataSource
 {
+    __weak HWGOptionsViewController *weakSelf = self;
+    
     UITableViewCell* (^cellForRowAtIndexPathBlock)(NSIndexPath *indexPath, UITableView *tableView) = ^UITableViewCell*(NSIndexPath *indexPath, UITableView *tableView) {
-        return (tableView == self.characterToTrimTableView) ?
-        [self configureCharCellUsingTableView:self.characterToTrimTableView atIndexPath:indexPath] :
-        [self configureWordCellUsingTableView:self.wordToIgnoreTableView atIndexPath:indexPath];
+        return (tableView == weakSelf.characterToTrimTableView) ?
+        [weakSelf configureCharCellUsingTableView:weakSelf.characterToTrimTableView atIndexPath:indexPath] :
+        [weakSelf configureWordCellUsingTableView:weakSelf.wordToIgnoreTableView atIndexPath:indexPath];
     };
     
     void (^deleteCellBlock)(NSIndexPath *indexPath, UITableView *tableView) = ^(NSIndexPath *indexPath, UITableView *tableView) {
         
-        (tableView == self.characterToTrimTableView) ?
-        [self.charactersToTrimMutableArray removeObjectAtIndex:indexPath.row]:
-        [self.wordsToIgnoreMutableArray removeObjectAtIndex:indexPath.row];
+        (tableView == weakSelf.characterToTrimTableView) ?
+        [weakSelf.charactersToTrimMutableArray removeObjectAtIndex:indexPath.row]:
+        [weakSelf.wordsToIgnoreMutableArray removeObjectAtIndex:indexPath.row];
         
-        NSSet *characterSet = [[NSSet alloc] initWithArray:self.charactersToTrimMutableArray];
-        NSSet *wordSet = [[NSSet alloc] initWithArray:self.wordsToIgnoreMutableArray];
+        NSSet *characterSet = [[NSSet alloc] initWithArray:weakSelf.charactersToTrimMutableArray];
+        NSSet *wordSet = [[NSSet alloc] initWithArray:weakSelf.wordsToIgnoreMutableArray];
         
-        (tableView == self.characterToTrimTableView) ?
-        [self.charactersToTrim saveCharacters:characterSet]:
-        [self.wordsToIgnore saveWords:wordSet];
+        (tableView == weakSelf.characterToTrimTableView) ?
+        [weakSelf.charactersToTrim saveCharacters:characterSet]:
+        [weakSelf.wordsToIgnore saveWords:wordSet];
         
         [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
     };
     
     NSInteger (^numberOfRowsInSectionBlock)(UITableView *tableView) = ^NSInteger(UITableView *tableView) {
         int numberOfRowsToReturn = 0;
-        if (tableView == self.wordToIgnoreTableView)
+        if (tableView == weakSelf.wordToIgnoreTableView)
         {
-            numberOfRowsToReturn = (int)[self.wordsToIgnoreMutableArray count];
+            numberOfRowsToReturn = (int)[weakSelf.wordsToIgnoreMutableArray count];
             //NSLog(@"Counting rows:%d", numberOfRowsToReturn);
         }
-        if (tableView == self.characterToTrimTableView)
+        if (tableView == weakSelf.characterToTrimTableView)
         {
-            numberOfRowsToReturn = (int)[self.charactersToTrimMutableArray count];
+            numberOfRowsToReturn = (int)[weakSelf.charactersToTrimMutableArray count];
         }
         return numberOfRowsToReturn;
     };
     
     BOOL (^canEditRowsBlock)() = ^BOOL() {
         //return YES;
-        return self.hasPurchasedEditingFeatures ? YES : NO;
+        return weakSelf.hasPurchasedEditingFeatures ? YES : NO;
     };
     
     self.dataSource = [[HWGOptionsDataSource alloc] initWithRowsInSectionBlock:numberOfRowsInSectionBlock CellForRowAtIndexPathBlock:cellForRowAtIndexPathBlock CanEditRowAtIndexPathBlock:canEditRowsBlock DeleteCellBlock:deleteCellBlock];
