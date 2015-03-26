@@ -15,6 +15,7 @@
 #import "HWGOptionsWordsToIgnore.h"
 #import "HWGDefaultPreferences.h"
 #import <DBChooser/DBChooser.h>
+#import "MBProgressHUD.h"
 
 @interface HWGTextViewController ()
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *uploadBarButton;
@@ -199,7 +200,6 @@
 {
     self.hintButton.enabled = NO;
     self.checkButton.enabled = NO;
-    self.navigationItem.title = @"Blankout";
 }
 
 -(void)enableButtons
@@ -221,9 +221,6 @@
     [indicator startAnimating];
     [alertView setValue:indicator forKey:@"accessoryView"];
     [alertView show];
-    
-    // Reset the navigation title in case it had said "Try again" before
-    self.navigationItem.title = @"Blankout";
     
     // Allow the game to iterate through the words again
     self.wordGame.gameOver = NO;
@@ -263,7 +260,6 @@
     if ([self.wordGame checkString:self.textField.text withTextView:self.textView])
     {
         self.textField.text = @"";
-        self.navigationItem.title = @"Blankout";
         if(self.wordGame.gameOver)
         {
             [self disableButtons];
@@ -271,7 +267,15 @@
     }
     else
     {
-        self.navigationItem.title = @"Try again";
+        MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+        hud.mode = MBProgressHUDModeText;
+        hud.labelText = @"Try again";
+        dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
+            sleep(2);
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [MBProgressHUD hideHUDForView:self.view animated:YES];
+            });
+        });
     }
     self.buttonPressed = YES;
     [self.view endEditing:YES];
