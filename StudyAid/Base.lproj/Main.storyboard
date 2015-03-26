@@ -235,6 +235,11 @@
                                 <action selector="loadFileButtonTapped:" destination="BYZ-38-t0r" id="A8d-9E-5Le"/>
                             </connections>
                         </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" title="About" id="geZ-sY-CQt">
+                            <connections>
+                                <segue destination="XJb-9h-DLt" kind="show" id="Ag8-nc-zN6"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="checkButton" destination="uKj-nR-0U5" id="5hZ-VV-1S0"/>
@@ -596,6 +601,63 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Qrg-QO-rhu" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="885" y="16"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="mbt-Yd-TpL">
+            <objects>
+                <viewController id="XJb-9h-DLt" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="toc-rt-ucR"/>
+                        <viewControllerLayoutGuide type="bottom" id="s4L-EP-9DN"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="Wrq-Df-pXm">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lRp-yS-gmn">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <mutableString key="text">Blankout is a learning tool designed to exercise your ability to recall text-based information.
+
+Acknowledgements:
+Portions of this software may utilize the following copyrighted material, the use of which is hereby acknowledged:
+
+Matej Bukovinski - (MBProgressHUD)
+Copyright (c) 2009-2015 Matej Bukovinski
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.</mutableString>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="lRp-yS-gmn" firstAttribute="leading" secondItem="Wrq-Df-pXm" secondAttribute="leadingMargin" constant="-16" id="1Cx-A5-3IE"/>
+                            <constraint firstItem="s4L-EP-9DN" firstAttribute="top" secondItem="lRp-yS-gmn" secondAttribute="bottom" id="7ND-Qf-43T"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="lRp-yS-gmn" secondAttribute="trailing" constant="-16" id="TaK-H9-HgD"/>
+                            <constraint firstItem="lRp-yS-gmn" firstAttribute="top" secondItem="toc-rt-ucR" secondAttribute="bottom" constant="-64" id="mMm-sz-UTm"/>
+                        </constraints>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Qdt-wm-Eq5" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="972" y="690"/>
         </scene>
     </scenes>
 </document>

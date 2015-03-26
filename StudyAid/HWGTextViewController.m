@@ -90,6 +90,18 @@
 
 # pragma mark Segue to options
 
+-(void)removeNavBarTapToRemoveKeyboardView
+{
+    for (UIView *inappropriateView in self.navigationController.navigationBar.subviews)
+    {
+        if (inappropriateView.tag == 999)
+        {
+            //NSLog(@"inappropriate view found");
+            [inappropriateView removeFromSuperview];
+        }
+    }
+}
+
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     if ([segue.identifier isEqualToString:@"options"])
@@ -100,14 +112,7 @@
         ovc.charactersToTrimMutableArray = [[NSMutableArray alloc] init];
         ovc.wordsToIgnoreMutableArray = [[NSMutableArray alloc] init];
         //NSLog(@"number of subviews in navbar:%d", [self.navigationController.navigationBar.subviews count]);
-        for (UIView *inappropriateView in self.navigationController.navigationBar.subviews)
-        {
-            if (inappropriateView.tag == 999)
-            {
-                //NSLog(@"inappropriate view found");
-                [inappropriateView removeFromSuperview];
-            }
-        }
+        [self removeNavBarTapToRemoveKeyboardView];
     }
 }
 
@@ -502,12 +507,14 @@
 
 - (void) setupNavbarGestureRecognizer {
     // recognise taps on navigation bar to hide
+    [self removeNavBarTapToRemoveKeyboardView];
+    
     UITapGestureRecognizer *gestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(dismissKeyboard)];
     gestureRecognizer.numberOfTapsRequired = 1;
     // create a view which covers most of the tap bar to
     // manage the gestures - if we use the navigation bar
     // it interferes with the nav buttons
-    CGRect frame = CGRectMake(50, 0, [self getLargestSizeOfFrameSize:self.view.frame.size].size.height, self.navigationController.navigationBar.frame.size.height);
+    CGRect frame = CGRectMake(80, 0, self.view.frame.size.width-160, self.navigationController.navigationBar.frame.size.height);
     UIView *navBarTapView = [[UIView alloc] initWithFrame:frame];
     [self.navigationController.navigationBar addSubview:navBarTapView];
     navBarTapView.backgroundColor = [UIColor clearColor];
@@ -561,6 +568,7 @@
 
 - (void)viewDidLayoutSubviews
 {
+    [self setupNavbarGestureRecognizer];
     [self enableScrollView];
     if (!self.buttonPressed)
     {
@@ -573,7 +581,7 @@
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-    [self setupNavbarGestureRecognizer];
+    //[self setupNavbarGestureRecognizer];
 }
 
 - (void)didReceiveMemoryWarning {
