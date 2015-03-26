@@ -57,10 +57,6 @@
              //NSLog(@"link is %@", url);
              [self loadTextFileFromURL:url];
          }
-         else
-         {
-             
-         }
      }];
 }
 
@@ -169,7 +165,7 @@
 
 -(void)textViewDidEndEditing:(UITextView *)textView
 {
-    NSLog(@"textview ended editing");
+    //NSLog(@"textview ended editing");
     [self.textStorage saveText:self.textView.text];
 }
 
