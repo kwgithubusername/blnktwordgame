@@ -25,10 +25,10 @@
     self = [super init];
     if (self)
     {
-        self.rowsInSectionBlock = aRowsInSectionBlock;
-        self.cellForRowAtIndexPathBlock = aCellForRowAtIndexPathBlock;
-        self.canEditRowAtIndexPathBlock = aCanEditRowAtIndexPathBlock;
-        self.deleteCellBlock = aDeleteCellBlock;
+        self.rowsInSectionBlock = [aRowsInSectionBlock copy];
+        self.cellForRowAtIndexPathBlock = [aCellForRowAtIndexPathBlock copy];
+        self.canEditRowAtIndexPathBlock = [aCanEditRowAtIndexPathBlock copy];
+        self.deleteCellBlock = [aDeleteCellBlock copy];
     }
     return self;
 }
