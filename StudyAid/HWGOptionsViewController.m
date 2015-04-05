@@ -45,6 +45,8 @@
 
 @implementation HWGOptionsViewController
 
+#pragma mark - Purchasing -
+
 -(void)requestProduct
 {
     SKProductsRequest *productsRequest = [[SKProductsRequest alloc] initWithProductIdentifiers:[NSSet setWithObject:kRemoveAdsProductIdentifier]];
@@ -282,7 +284,7 @@
     //NSLog(@"BOOL hasPurchasedEditingFeatures is %hhd", self.hasPurchasedEditingFeatures);
 }
 
-#pragma mark purchasing
+
 
 -(void)restrictUserToYellowHighlighter
 {
@@ -299,7 +301,7 @@
     }
 }
 
-#pragma mark initializers
+#pragma mark - initializers -
 
 -(HWGDefaultPreferences *)defaultPreferences
 {
@@ -326,7 +328,7 @@
 }
 
 
-#pragma mark Button methods
+#pragma mark - Button methods -
 
 -(NSArray *)highlighterButtonsArray
 {
@@ -360,7 +362,7 @@
     }
 }
 
-#pragma mark Keyboard methods
+#pragma mark - Keyboard methods -
 
 - (void)keyboardWasShown:(NSNotification*)aNotification
 {
@@ -509,7 +511,7 @@
     [self.wordToIgnoreTextField resignFirstResponder];
 }
 
-#pragma mark Table View Delegate methods
+#pragma mark - Table View Delegate methods -
 
 -(void)setupDataSource
 {
@@ -586,7 +588,7 @@
     return cell;
 }
 
-#pragma mark View methods
+#pragma mark - View methods -
 
 -(void)tapReceived:(UITapGestureRecognizer *)gesture
 {
@@ -715,7 +717,7 @@
 
 }
 
-#pragma mark TextField Limits
+#pragma mark - TextField Limits -
 
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
 {
@@ -745,14 +747,6 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-/*
-#pragma mark - Navigation
 
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

@@ -29,7 +29,7 @@
 
 @implementation HiddenWordGame
 
-#pragma mark Initializer
+#pragma mark - Initializer -
 
 -(void)setup
 {
@@ -50,7 +50,7 @@
 }
 
 
-#pragma mark Create classes
+#pragma mark - Create classes -
 
 -(HWGInvalidCharacterRemover *)invalidCharacterRemover
 {
@@ -88,7 +88,7 @@
     return _wordSearcher;
 }
 
-#pragma mark Preparing/Resetting the game
+#pragma mark - Preparing/Resetting the game -
 
 -(void)resetFormattingInTextView:(UITextView *)textView
 {
@@ -168,7 +168,7 @@
     }
 }
 
-#pragma mark Hide Words methods
+#pragma mark - Hide Words methods -
 
 -(void)hideNumberOfWords:(int)numberOfWordsToHide inTextView:(UITextView *)textView
 {
@@ -230,7 +230,7 @@
     [self highlightRandomWord:textView InSequence:willHighlightInSequence];
 }
 
-#pragma mark Highlight methods
+#pragma mark - Highlight methods -
 
 -(void)highlightRandomWord:(UITextView *)textView InSequence:(BOOL)willHighlightInSequence;
 {
@@ -297,7 +297,7 @@
     }
 }
 
-#pragma mark Hint methods
+#pragma mark - Hint methods -
 
 -(NSString *)giveHint
 {
@@ -334,52 +334,6 @@
 {
     self.hintIndex = 0;
 }
-
-#pragma mark Unused methods
-
--(void)randomUniqueNumberGenerator:(NSMutableArray *)targetArray
-{
-    // The target array for the ranges is the array of ranges at which each instance of the word occurs
-    
-    // If this is created outside the for loop, it can't know which word to look up the range for
-    // If this is created inside the for loop, it will be created every time a word is found
-    // Does each word need a new indexArray? Yes because
-    // How about creating it outside the for loop and setting it inside the for loop; if the indexArray is ,
-    
-    // If this is alloc inited outside the for loop, there will only be one array of NSRanges but it will be reset for every new word.
-    // If this is alloc inited inside the for loop, there will be multiple arrays of NSRanges, one for each word
-    
-    // for (...) {...
-    // if (indexArray = nil) {alloc init and set the indexarray}; then take out the index, use it, and remove it
-    // Once the array runs out of indexes, it will get set again
-    
-    // Create an array that goes from 0 to [NSMutableArray count]; this array will be used to store indexes
-    NSMutableArray* indexArray = [[NSMutableArray alloc] init];
-    for (int i = 0, count = (int)[targetArray count]; i < count; i++)
-    {
-        [indexArray addObject:[NSNumber numberWithInt:i]];
-    }
-    
-    // Get a random int within the bounds of the indexArray
-    int randomIndexForArray = arc4random_uniform((int)[indexArray count]);
-    
-    // Pull an index from the indexArray at the index random int
-    int randomIndex = [indexArray[randomIndexForArray] intValue];
-    
-    // Use the index to randomly select an object from your target array
-    __unused id someObject = targetArray[randomIndex];
-    
-    NSRange range;
-    NSValue *rangeOfRandomlySelectedWordValue = targetArray[randomIndex];
-    [rangeOfRandomlySelectedWordValue getValue:&range];
-    
-    // Once we have put away the word, remove the index from the indexArray
-    [indexArray removeObjectAtIndex:[indexArray count]-1];
-    
-    // Since the indexArray has lost an object, its index has decremented by 1. The word in the randomlySelectedWordArray must also be removed to match the decrement
-    [targetArray removeObjectAtIndex:randomIndex];
-}
-
 
 @end
 

@@ -42,7 +42,7 @@
 
 @implementation HWGTextViewController
 
-# pragma mark Dropbox
+# pragma mark - Dropbox -
 
 - (IBAction)loadFileButtonTapped:(UIBarButtonItem *)sender
 {
@@ -84,7 +84,7 @@
     [alertView show];
 }
 
-# pragma mark Segue to options
+# pragma mark - Segue to options -
 
 -(void)removeNavBarTapToRemoveKeyboardView
 {
@@ -112,7 +112,7 @@
     }
 }
 
-#pragma mark Load preferences from options
+#pragma mark - Load preferences from options -
 
 -(HWGDefaultPreferences *)defaultPreferences
 {
@@ -138,7 +138,7 @@
     return _optionsWordsToIgnore;
 }
 
-# pragma mark TextView
+# pragma mark - TextView -
 
 -(HWGTextViewText *)textStorage
 {
@@ -174,14 +174,14 @@
     [self enableScrollView];
 }
 
-#pragma mark Setup
+#pragma mark - Setup -
 
 -(void)setupDefaults
 {
     [self.defaultPreferences loadDefaults];
 }
 
-#pragma mark Word game initializers
+#pragma mark - Word game initializers -
 
 -(HiddenWordGame *)wordGame
 {
@@ -195,7 +195,7 @@
     _filteredWordArray = filteredWordArray;
 }
 
-# pragma mark Buttons
+# pragma mark - Buttons -
 
 -(void)disableButtons
 {
@@ -290,7 +290,7 @@
     [self dismissKeyboard];
 }
 
-# pragma mark Slider
+# pragma mark - Slider -
 
 - (void)filterAndCalculateWords
 {
@@ -343,7 +343,7 @@
     self.percentHiddenLabel.text = [[NSString alloc] initWithFormat:@"Hiding %d of %d filtered words", numberOfWordsToHide, numberOfWords];
 }
 
-# pragma mark Keyboard
+# pragma mark - Keyboard -
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
@@ -458,7 +458,7 @@
 
 }
 
-#pragma mark View methods
+#pragma mark - View methods -
  
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -527,24 +527,6 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardDidHideNotification object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIDeviceOrientationDidChangeNotification object:nil];
-}
-
-#pragma mark Unused
-
-- (void)removeFile
-{
-    // you need to write a function to get to that directory
-    NSString *documentDirectories = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
-    NSString *path = [documentDirectories stringByAppendingPathComponent:@"/stringToStore.txt"];
-    NSFileManager *fileManager = [NSFileManager defaultManager];
-    if ([fileManager fileExistsAtPath:path])
-    {
-        NSError *error;
-        if (![fileManager removeItemAtPath:path error:&error])
-        {
-            //NSLog(@"Error removing file: %@", error);
-        };
-    }
 }
 
 - (void)resetContentSize

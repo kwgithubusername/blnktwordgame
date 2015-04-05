@@ -71,7 +71,7 @@
     return set;
 }
 
-#pragma mark Verb conjugation
+#pragma mark - Verb conjugation -
 
 - (NSSet *)verbBe
 {
