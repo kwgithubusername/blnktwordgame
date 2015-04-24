@@ -464,7 +464,6 @@
     [super viewDidLoad];
     
     [self setupDefaults];
-    // NSLog(@"Files in directory:%lu", (unsigned long)[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) count]);
     
     [self loadBackground];
 

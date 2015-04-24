@@ -345,7 +345,7 @@
         }
         self.highlighterColor = sender.backgroundColor;
         [sender setTitle:@"✍" forState:UIControlStateNormal];
-        //NSLog(@"button pressed");
+        // NSLog(@"button pressed");
         [self.colorToStore saveColor:sender.backgroundColor];
     }
     else if ([sender.titleLabel.text isEqualToString:@"☒"])
@@ -354,11 +354,11 @@
     }
     else if (sender == self.yellowHighlighterButton)
     {
-        
+        // yellow is default
     }
     else
     {
-        //NSLog(@"Error: Button does not have an X on it");
+        // NSLog(@"Error: Button does not have an X on it");
     }
 }
 
