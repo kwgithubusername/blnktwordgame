@@ -227,12 +227,12 @@
     // Hide only a certain number of words
     [self hideNumberOfWords:numberOfWordsToHide inTextView:textView];
     
-    [self highlightRandomWord:textView InSequence:willHighlightInSequence];
+    [self highlightRandomWordInTextView:textView InSequence:willHighlightInSequence];
 }
 
 #pragma mark - Highlight methods -
 
--(void)highlightRandomWord:(UITextView *)textView InSequence:(BOOL)willHighlightInSequence;
+-(void)highlightRandomWordInTextView:(UITextView *)textView InSequence:(BOOL)willHighlightInSequence;
 {
     
     // Randomly select a word and its range
@@ -285,7 +285,7 @@
         }
         else
         {
-        [self highlightRandomWord:words InSequence:self.willHighlightInSequence];
+        [self highlightRandomWordInTextView:words InSequence:self.willHighlightInSequence];
         }
         // User has submitted the correct string
         return YES;
