@@ -219,8 +219,6 @@
     
     NSArray *wordsToHide = [[NSArray alloc] initWithArray:[self loadWordsToHideFromMutableArray:self.filteredWordArray]];
     
-    
-    
     // Get the ranges for every word
     [self loadRangesFromArrayOfWords:wordsToHide inTextView:textView];
     

@@ -174,6 +174,14 @@
     [self enableScrollView];
 }
 
+-(BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
+{
+    UITextRange * selectionRange = [textView selectedTextRange];
+    CGRect selectionEndRect = [textView caretRectForPosition:selectionRange.end];
+    [self.scrollView scrollRectToVisible:CGRectOffset(selectionEndRect, 0, 15) animated:YES];
+    return YES;
+}
+
 #pragma mark - Setup -
 
 -(void)setupDefaults
@@ -389,6 +397,12 @@
         if (!CGRectContainsPoint(aRect, self.textField.frame.origin) ) {
             [self.scrollView scrollRectToVisible:self.textField.frame animated:YES];
         }
+    }
+    else if ([self.textView isFirstResponder])
+    {
+        UITextRange * selectionRange = [self.textView selectedTextRange];
+        CGRect selectionEndRect = [self.textView caretRectForPosition:selectionRange.end];
+        [self.scrollView scrollRectToVisible:CGRectOffset(selectionEndRect, 0, 15) animated:YES];
     }
 }
 
